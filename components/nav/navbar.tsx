@@ -12,7 +12,7 @@ const navitems = [
 
 const Navbar = () => {
   return (
-    <section className="w-full h-[80px] flex-center mx-auto">
+    <section className="w-full h-[80px] z-50 bg-gray-950 flex-center mx-auto">
       <div className="flex items-center justify-start mx-5 sm:mx-8 gap-6 lg:gap-0 lg:justify-between h-full max-w-[1140px] w-full">
         <Image
           className="block lg:hidden"
@@ -21,13 +21,13 @@ const Navbar = () => {
           alt="menu"
           src={"/icons/menu.svg"}
         />
-        <div>LOGO</div>
+        <p className="text-white">LOGO</p>
         <nav className="lg:flex gap-6 hidden">
           {navitems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-gray-700 text-[13px] font-normal"
+              className="text-white text-[13px] font-normal"
             >
               {item.name}
             </a>
