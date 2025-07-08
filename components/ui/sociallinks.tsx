@@ -7,6 +7,12 @@ const FooterImageItems = [
   { key: 2, label: "Instagram", href: "/", src: "/icons/instagram_filled.svg" },
   { key: 1, label: "Linkedin", href: "/", src: "/icons/linkedin_filled.svg" },
   //   { key: 1, label: "Youtube", href: "/", src: "/assets/icons/youtube.svg" },
+  {
+    key: 3,
+    label: "Whatsapp",
+    href: "/",
+    src: "/icons/whattsapp_filled.svg",
+  },
 ];
 
 const SocialLinks = () => {
@@ -16,7 +22,7 @@ const SocialLinks = () => {
         <Link
           href={v.href}
           key={v.key}
-          className="flex size-9 items-center justify-center rounded-full bg-black ring-1 ring-slate-400 hover:bg-slate-100"
+          className="flex size-9 items-center justify-center rounded-full bg-black ring-1 ring-slate-400 hover:bg-slate-300"
         >
           <Image height={20} width={20} alt={v.label} src={v.src} />
         </Link>

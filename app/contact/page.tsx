@@ -61,15 +61,15 @@ const ContactForm = () => {
 
   return (
     <main className="flex-center flex-col max-w-[2800px] w-full">
-      <div className="w-screen border h-[860px] md:h-[800px] lg:h-[960px] 2xl:h-[1360px] relative overflow-hidden">
+      <div className="w-screen border h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
         <Image
           fill
           alt="Contact Background"
           src="/images/contact_img.jpg"
           className="z-0 object-cover"
         />
-        <div className="relative z-10 flex -top-52 sm:-top-64 md:-top-72 lg:-top-80 2xl:-top-[500px] items-center justify-center h-full">
-          <p className="max-w-[1240px] px-10 text-center text-[20px] font-medium text-gray-700 bg-white/30 rounded-lg p-6">
+        <div className="relative z-10 flex -top-64 sm:-top-64 md:-top-72 lg:-top-[360px] 2xl:-top-[520px] items-center justify-center h-full">
+          <p className="max-w-[1240px] px-10 text-center text-[16px] sm:text-[20px] md:text-[28px] font-medium text-gray-700 rounded-lg p-6">
             Have a project in mind? A question, idea, or simply want to start a
             conversation? We’d love to hear from you. Whether you&lsquo;re
             looking to collaborate, request a consultation, or just learn more
@@ -101,7 +101,7 @@ const ContactForm = () => {
                 className="flex-center mt-2 "
               >
                 <p className="body-regular lg:paragraph-regular text-gray-700">
-                  +91 95000 67036
+                  +91 75502 37036
                 </p>
               </Link>
             </div>
