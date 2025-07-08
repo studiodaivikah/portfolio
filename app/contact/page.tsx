@@ -71,11 +71,11 @@ const ContactForm = () => {
         <div className="relative z-10 flex -top-52 sm:-top-64 md:-top-72 lg:-top-80 2xl:-top-[500px] items-center justify-center h-full">
           <p className="max-w-[1240px] px-10 text-center text-[20px] font-medium text-gray-700 bg-white/30 rounded-lg p-6">
             Have a project in mind? A question, idea, or simply want to start a
-            conversation? We’d love to hear from you. Whether you're looking to
-            collaborate, request a consultation, or just learn more about what
-            we do, reach out using the form below or connect with us directly.
-            We believe the best designs begin with a simple conversation—let’s
-            start one today.
+            conversation? We’d love to hear from you. Whether you&lsquo;re
+            looking to collaborate, request a consultation, or just learn more
+            about what we do, reach out using the form below or connect with us
+            directly. We believe the best designs begin with a simple
+            conversation—let’s start one today.
           </p>
         </div>
       </div>
