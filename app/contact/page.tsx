@@ -230,6 +230,29 @@ const ContactForm = () => {
           </form>
         </div>
       </section>
+      <div className="flex-center w-full h-[400px] bg-black">
+        <div className="bg-white w-full h-[300px] rounded-[20px] flex justify-between max-w-[1140px] px-6 sm:px-10 md:px-20">
+          <div className="flex-center gap-10 w-full h-full overflow-hidden">
+            <div className="relative w-[460px] h-[300px] -mb-26">
+              <Image
+                fill
+                src="/images/footerbg.jpg"
+                alt="Description"
+                className="rounded-[20px]"
+              />
+            </div>
+            <div className="flex flex-col items-start jsutify-start gap-4">
+              <p className="text-black max-w-[700px] w-full text-start text-wrap text-[28px] md:text-[46px] lg:text-[60px] leading-10 sm:leading-16 lg:leading-20 font-bold">
+                CONTACT US FOR SOLUTIONS
+              </p>
+              <p className="text-[16px]">
+                All queries are solved within{" "}
+                <span className="underline">24 hours</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
