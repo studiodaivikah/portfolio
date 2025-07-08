@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
+import MainFooter from "@/components/footer/mainfooter";
+import Footer from "@/components/footer/footer";
 
 const ContactSchema = z.object({
   name: z
@@ -253,6 +255,8 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
+      <MainFooter />
+      <Footer />
     </main>
   );
 };
