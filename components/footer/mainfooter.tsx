@@ -3,12 +3,12 @@ import React from "react";
 
 const f1_items = [
   { id: 1, label: "Linkedin", href: "/" },
-  { id: 2, label: "Whattsapp", href: "/" },
+  { id: 2, label: "Whatsapp", href: "/" },
   { id: 3, label: "Instagram", href: "/" },
 ];
 
 const address = [
-  { id: 2, label: "36, Suraput main road," },
+  { id: 2, label: "36, Surapet main road," },
   { id: 3, label: "Puthagaram" },
   { id: 4, label: "Chennai - 600099" },
   { id: 5, label: "Tamil Nadu" },
@@ -135,7 +135,7 @@ const MainFooter = () => {
               </p>
             </div>
             <div className="flex flex-col items-start gap-y-3">
-              <p className="font-normal text-white text-[14px]">VISSION</p>
+              <p className="font-normal text-white text-[14px]">VISION</p>
               <p className="font-normal text-gray-400 text-[14px] w-full max-w-[200px]">
                 Where modern thinking meets classic roots to shape enduring
                 design.

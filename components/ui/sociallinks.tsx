@@ -11,7 +11,7 @@ const FooterImageItems = [
     key: 3,
     label: "Whatsapp",
     href: "/",
-    src: "/icons/whattsapp_filled.svg",
+    src: "/icons/whatsapp_filled.svg",
   },
 ];
 
