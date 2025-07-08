@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/nav/navbar";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -19,7 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={jost.className}>{children}</body>
+      <body className={jost.className}>
+        <main className="flex-center flex-col max-w-[2800px] w-full">
+          <Navbar />
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

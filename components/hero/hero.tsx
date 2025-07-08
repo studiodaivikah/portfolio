@@ -12,11 +12,11 @@ const Hero = () => {
         ENDURE, AND SHAPE TOMORROW
       </h2>
       <h3 className="text-white text-[20px] font-normal max-w-[760px] leading-7 w-full text-wrap">
-        Welcome to the world of architecture — where imagination takes shape in
-        steel and stone, where creativity meets functionality, and where every
-        line drawn is a step toward turning dreams into structures. Here, each
-        design tells a unique story — of people, place, purpose, and
-        possibility.
+        &quot;Welcome to the world of architecture — where imagination takes
+        shape in steel and stone, where creativity meets functionality, and
+        where every line drawn is a step toward turning dreams into structures.
+        Here, each design tells a unique story — of people, place, purpose, and
+        possibility.&quot;
       </h3>
       <div className="flex justify-between flex-col gap-6 w-full">
         <div>
