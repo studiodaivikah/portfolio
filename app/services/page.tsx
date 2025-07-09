@@ -17,7 +17,7 @@ const page = () => {
               Design. Build. Inspire
             </p>
             <p className="text-[16px] font-normal text-black">
-              &quot;Shaping the Future Today&quot;
+              Shaping the Future Today
             </p>
           </div>
           <div className="flex-center">
@@ -133,7 +133,7 @@ const page = () => {
             <div className="w-full h-px border border-gray-300/50" />
             <div className="flex-between w-full mt-2">
               <p className="text-black text-[24px] font-normal">
-                Space Planning
+                Spatial Planning
               </p>
               <div className="text-black text-[24px]">+</div>
             </div>
@@ -149,7 +149,7 @@ const page = () => {
               Where Vision Meets Reality
             </p>
             <p className="text-[16px] font-normal text-black">
-              &quot;Crafting Future Landmarks&quot;
+              Crafting Future Landmarks
             </p>
           </div>
           <div className="flex-center">
@@ -159,9 +159,9 @@ const page = () => {
           </div>
           <div className="flex-center max-w-[700px] w-full">
             <p className="text-[24px] text-black font-normal leading-7">
-              Daivaikah Architecture welcomes you! Together, we build
-              extraordinary spaces through imagination, precision, and a shared
-              love for design.
+              Studio Daivaikah welcomes you! Together, we build extraordinary
+              spaces through imagination, precision, and a shared love for
+              design.
             </p>
           </div>
         </div>
