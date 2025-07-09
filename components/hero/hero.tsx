@@ -43,6 +43,14 @@ const Hero = () => {
                 src={"/icons/instagram_filled.svg"}
               />
             </div>
+            <div className="border border-white p-1.5 rounded-full">
+              <Image
+                height={16}
+                width={16}
+                alt="whatsapp"
+                src={"/icons/whatsapp_filled.svg"}
+              />
+            </div>
           </div>
         </div>
       </div>

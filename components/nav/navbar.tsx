@@ -46,6 +46,12 @@ const Navbar = () => {
             alt="instagram"
             src={"/icons/instagram.svg"}
           />
+          <Image
+            height={24}
+            width={24}
+            alt="whatsapp"
+            src={"/icons/whatsapp.svg"}
+          />
         </div>
       </div>
     </section>
