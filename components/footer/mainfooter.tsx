@@ -33,7 +33,7 @@ const links = [
 
 const MainFooter = () => {
   return (
-    <section className="flex items-center flex-col gap-3 bg-black w-full py-10">
+    <section className="flex items-center flex-col gap-3 bg-black w-full py-20">
       <div className="max-w-[1100px] w-full bg-black flex flex-col gap-3 items-center px-10">
         <div className="flex-between w-full gap-4">
           <p className="text-white font-bold text-[24px]">LOGO</p>
