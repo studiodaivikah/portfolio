@@ -11,7 +11,7 @@ const page = () => {
       <div className="w-full flex-center py-28">
         <img
           className="h-[500px] w-screen absolute opacity-50"
-          src={"/images/abt_pic_1.jpg"}
+          src={"/images/abt_main.jpg"}
           alt="pic1"
         />
         <p className="text-center z-50 text-black font-extrabold text-[80px] md:text-[120px] lg:text-[140px]">
@@ -41,7 +41,7 @@ const page = () => {
           </p>
         </div>
         <div className="relative md:size-[400px] lg:size-[500px] aspect-square">
-          <Image alt="pic1" src={"/images/abt_pic_2.jpg"} fill />
+          <Image alt="pic1" src={"/images/abt_sub.jpg"} fill />
         </div>
       </div>
       <Timeline />

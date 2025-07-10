@@ -9,7 +9,7 @@ export default function Timeline() {
       description:
         "Studio Daivikah is the vision of a passionate architect driven by the belief that great design goes beyond beauty - it must serve,inspire.",
       type: "milestone",
-      image: "/images/abt1.jpg",
+      image: "/images/abt_pic_2.jpg",
     },
     {
       id: 2,
@@ -18,8 +18,7 @@ export default function Timeline() {
       description:
         "Welcome to a New Chapter in Living — Our First Residential Project in Madhavaram We are proud to introduce our very first residential venture in Madhavaram — a thoughtfully crafted community where comfort, connectivity, and contemporary design come together seamlessly. This milestone project marks the beginning of a vision to redefine urban living in one of Chennai’s most rapidly growing neighborhoods. Set amidst the calm yet well-connected streets of Madhavaram, the project offers the perfect balance of peaceful residential charm and urban accessibility. Every home is designed to reflect our core values — functionality, elegance, and enduring quality — while catering to the evolving lifestyles of modern families.",
       type: "completion",
-      image:
-        "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&h=600&fit=crop",
+      image: "/images/abt_pic_3.jpg",
     },
     {
       id: 3,
@@ -28,7 +27,7 @@ export default function Timeline() {
       description:
         "Studio Daivikah expanded its services into commercial design,taking an office building and retail spaces.",
       type: "milestone",
-      image: "/images/abt_pic_3.jpg",
+      image: "/images/abt_pic_4.jpg",
     },
   ];
 
