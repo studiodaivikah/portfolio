@@ -196,7 +196,7 @@ const Page = () => {
               </div>
               <div className="mt-3 text-start ml-6 max-w-[300px] flex-wrap w-full">
                 <h3 className="text-[18px] md:text-base font-semibold text-gray-800 group-hover:text-black transition-colors duration-200">
-                  {item.title}
+                  {item.title.toUpperCase()}
                 </h3>
               </div>
             </div>
