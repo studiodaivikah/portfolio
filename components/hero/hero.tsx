@@ -3,13 +3,14 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="absolute flex items-start px-5 sm:px-8 justify-start flex-col top-36 gap-y-10 lg:justify-between h-auto max-w-[1200px] w-full">
+    <section className="absolute flex items-start px-5 sm:px-8 justify-start flex-col top-28 gap-y-10 lg:justify-between h-auto max-w-[1200px] w-full">
       {/* <h1 className="text-[20px] text-gray-300 -mb-6 font-normal">
         STRUCTURAL ART
       </h1> */}
       <h2 className="text-white text-[36px] xs:text-[40px] sm:text-[52px] md:text-[60px] font-extrabold leading-12 sm:leading-16">
-        DESIGNING SPACES THAT INSPIRE, <br />
-        ENDURE, AND SHAPE TOMORROW
+        DESIGNING SPACES THAT, <br />
+        INSPIRE ENDURE, <br />
+         AND SHAPE TOMORROW
       </h2>
       <h3 className="text-white text-[20px] font-normal max-w-[760px] leading-7 w-full text-wrap">
         &quot;Welcome to the world of architecture — where imagination takes
