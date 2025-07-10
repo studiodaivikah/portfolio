@@ -5,10 +5,8 @@ import React from "react";
 const page = () => {
   return (
     <section className="w-full flex-center flex-col">
-      <div className="w-full flex-center border-b border-b-black py-20">
-        <p className="text-center text-black font-extrabold text-[140px]">
-          {/* SERVICES */}
-        </p>
+      <div className="w-full flex-center border-b border-b-black">
+        <img src={"/images/ser_pic_1.jpg"} className="w-screen h-[400px]"/>
       </div>
       <div className="max-w-[1200px] w-full px-10 py-14 flex items-start justify-center flex-col">
         <div className="flex flex-col items-start w-full justify-center gap-y-5">

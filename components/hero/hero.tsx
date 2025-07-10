@@ -27,30 +27,47 @@ const Hero = () => {
         <div className="flex justify-end gap-3">
           <div className="flex-center gap-3">
             <p className="text-white text-sm font-normal">FOLLOW US</p>
-            <div className="border border-white p-1.5 rounded-full">
+            <a
+              target="_blank"
+              href={"https://www.linkedin.com/company/studio-daivikah/"}
+              rel="noopener noreferrer"
+              className="border border-white p-1.5 rounded-full"
+            >
               <Image
                 height={16}
                 width={16}
                 alt="linkedin"
                 src={"/icons/linkedin_filled.svg"}
               />
-            </div>
-            <div className="border border-white p-1.5 rounded-full">
+            </a>
+            <a
+              target="_blank"
+              href={
+                "https://www.instagram.com/studio.daivikah?igsh=NHFnbjJ2cmpxYXRh&utm_source=qr"
+              }
+              rel="noopener noreferrer"
+              className="border border-white p-1.5 rounded-full"
+            >
               <Image
                 height={16}
                 width={16}
                 alt="instagram"
                 src={"/icons/instagram_filled.svg"}
               />
-            </div>
-            <div className="border border-white p-1.5 rounded-full">
+            </a>
+            <a
+              href="https://wa.me/917550237036?text=Hello%20Studio%20Daivikah"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white p-1.5 rounded-full"
+            >
               <Image
                 height={16}
                 width={16}
                 alt="whatsapp"
                 src={"/icons/whatsapp_filled.svg"}
               />
-            </div>
+            </a>
           </div>
         </div>
       </div>

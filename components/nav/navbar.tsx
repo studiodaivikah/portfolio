@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const navitems = [
@@ -24,34 +25,57 @@ const Navbar = () => {
         <p className="text-white">LOGO</p>
         <nav className="lg:flex gap-6 hidden">
           {navitems.map((item) => (
-            <a
+            <Link
               key={item.name}
               href={item.href}
               className="text-white text-[13px] font-normal"
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="hidden lg:flex items-center justify-center gap-1.5">
-          <Image
-            height={24}
-            width={24}
-            alt="linkedin"
-            src={"/icons/linkedin.svg"}
-          />
-          <Image
-            height={24}
-            width={24}
-            alt="instagram"
-            src={"/icons/instagram.svg"}
-          />
-          <Image
-            height={24}
-            width={24}
-            alt="whatsapp"
-            src={"/icons/whatsapp.svg"}
-          />
+          <a
+            target="_blank"
+            href={"https://www.linkedin.com/company/studio-daivikah/"}
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              height={24}
+              width={24}
+              alt="linkedin"
+              src={"/icons/linkedin.svg"}
+            />
+          </a>
+          <a
+            target="_blank"
+            href={
+              "https://www.instagram.com/studio.daivikah?igsh=NHFnbjJ2cmpxYXRh&utm_source=qr"
+            }
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              height={24}
+              width={24}
+              alt="instagram"
+              src={"/icons/instagram.svg"}
+            />
+          </a>
+          <a
+            href="https://wa.me/917550237036?text=Hello%20Studio%20Daivikah"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <Image
+              height={24}
+              width={24}
+              alt="whatsapp"
+              src="/icons/whatsapp.svg"
+            />
+          </a>
         </div>
       </div>
     </section>
