@@ -7,13 +7,13 @@ import Showcase from "@/components/about/showcase";
 
 const page = () => {
   return (
-    <section className="w-full flex-col flex-center gap-y-24">
+    <section className="w-full flex-col flex-center">
       <div className="w-full flex-center border-b border-b-black py-40">
         <p className="text-center text-black font-extrabold text-[80px] md:text-[120px] lg:text-[140px]">
           ABOUT
         </p>
       </div>
-      <div className="flex flex-col md:flex-row md:justify-between max-w-[1240px] w-full px-10">
+      <div className="flex flex-col my-24 md:flex-row md:justify-between max-w-[1240px] w-full px-10">
         <div className="flex-start flex-col gap-y-3">
           <p className="text-[24px] text-black font-medium">Studio Daivikah</p>
           <p className="text-[18px] ml-24 sm:ml-32 lg:ml-36 text-black font-normal">
