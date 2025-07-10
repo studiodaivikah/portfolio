@@ -35,14 +35,14 @@ const MainFooter = () => {
   return (
     <section className="flex items-center flex-col gap-3 bg-black w-full py-10">
       <div className="max-w-[1100px] w-full bg-black flex flex-col gap-3 items-center px-10">
-        <div className="flex-between w-full">
+        <div className="flex-between w-full gap-4">
           <p className="text-white font-bold text-[24px]">LOGO</p>
           <div className="flex-between w-full max-w-[300px]">
             {f1_items.map((items) => (
               <Link
                 href={items.href}
                 key={items.id}
-                className="text-[16px] text-gray-300 font-normal"
+                className="text-[14px] sm:text-[16px] text-gray-300 font-normal"
               >
                 {items.label}
               </Link>
@@ -50,7 +50,7 @@ const MainFooter = () => {
           </div>
         </div>
         <div className="w-full border border-gray-400/30 h-0.5" />
-        <div className="grid grid-cols-2 md:flex md:justify-between w-full mt-10">
+        <div className="grid grid-cols-2 gap-5 md:flex md:justify-between w-full mt-10">
           <div className="flex flex-col items-start gap-y-7">
             <div className="flex flex-col items-start gap-y-3">
               <p className="font-normal text-white text-[16px] mb-4">
