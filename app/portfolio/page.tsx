@@ -194,7 +194,7 @@ const Page = () => {
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
               </div>
-              <div className="mt-3 text-center">
+              <div className="mt-3 text-start ml-6 max-w-[300px] flex-wrap w-full">
                 <h3 className="text-[18px] md:text-base font-semibold text-gray-800 group-hover:text-black transition-colors duration-200">
                   {item.title}
                 </h3>
