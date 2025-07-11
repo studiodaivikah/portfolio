@@ -1,10 +1,7 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  DragEvent,
-} from "react";
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Upload, Plus, Edit, Trash2, Save, X } from "lucide-react";
 
 type Project = {
@@ -12,7 +9,7 @@ type Project = {
   type: string;
   title: string;
   image: string;
-  createdAt: string; // or Date, depending on API response
+  createdAt: string;
 };
 
 type FormDataType = {
@@ -26,15 +23,11 @@ const PortfolioManager: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [dragActive, setDragActive] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({
     type: "",
     title: "",
     image: "",
   });
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const projectTypes = [
     "all items",
@@ -44,6 +37,14 @@ const PortfolioManager: React.FC = () => {
     "project management",
     "sustainability",
   ];
+
+  // Load Cloudinary widget script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   // Fetch projects
   const fetchProjects = async () => {
@@ -64,73 +65,6 @@ const PortfolioManager: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // Handle file selection
-  const handleFileSelect = (file: File | null) => {
-    if (file && file.type.startsWith("image/")) {
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setFormData((prev) => ({ ...prev, image: e.target?.result as string }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Drag and drop handlers with proper typing
-  const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(true);
-  };
-
-  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-  };
-
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  };
-
-  // Upload image
-  const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    setUploading(true);
-    try {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
-
-      const data = await response.json();
-      return data.imageUrl;
-    } catch (error) {
-      console.error("Upload error:", error);
-      throw error;
-    } finally {
-      setUploading(false);
-    }
-  };
-
   // Create project
   const createProject = async (
     projectData: Omit<Project, "id" | "createdAt">
@@ -144,10 +78,7 @@ const PortfolioManager: React.FC = () => {
         body: JSON.stringify(projectData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create project");
-      }
-
+      if (!response.ok) throw new Error("Failed to create project");
       const newProject: Project = await response.json();
       setProjects((prev) => [...prev, newProject]);
       return newProject;
@@ -171,10 +102,7 @@ const PortfolioManager: React.FC = () => {
         body: JSON.stringify(projectData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to update project");
-      }
-
+      if (!response.ok) throw new Error("Failed to update project");
       const updatedProject: Project = await response.json();
       setProjects((prev) =>
         prev.map((p) => (p.id === id ? updatedProject : p))
@@ -193,34 +121,26 @@ const PortfolioManager: React.FC = () => {
         method: "DELETE",
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to delete project");
-      }
-
+      if (!response.ok) throw new Error("Failed to delete project");
       setProjects((prev) => prev.filter((p) => p.id !== id));
     } catch (error) {
       console.error("Error deleting project:", error);
-      throw error;
     }
   };
 
-  // Handle form submission
+  // Handle form submit
   const handleSubmit = async () => {
-    if (!formData.type || !formData.title || !selectedFile) {
-      alert("Please fill in all fields and select an image");
+    if (!formData.type || !formData.title || !formData.image) {
+      alert("Please fill in all fields and upload an image");
       return;
     }
 
     try {
       setIsLoading(true);
-
-      // Upload image first
-      const imageUrl = await uploadImage(selectedFile);
-
       const projectData = {
         type: formData.type,
         title: formData.title,
-        image: imageUrl,
+        image: formData.image,
       };
 
       if (editingProject) {
@@ -231,14 +151,10 @@ const PortfolioManager: React.FC = () => {
         setShowAddForm(false);
       }
 
-      // Reset form
       setFormData({ type: "", title: "", image: "" });
-      setSelectedFile(null);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      alert(
-        "Error saving project: " +
-          (error instanceof Error ? error.message : String(error))
-      );
+      alert("Error saving project.");
     } finally {
       setIsLoading(false);
     }
@@ -252,7 +168,6 @@ const PortfolioManager: React.FC = () => {
       title: project.title,
       image: project.image,
     });
-    setSelectedFile(null);
   };
 
   // Cancel editing
@@ -260,11 +175,48 @@ const PortfolioManager: React.FC = () => {
     setEditingProject(null);
     setShowAddForm(false);
     setFormData({ type: "", title: "", image: "" });
-    setSelectedFile(null);
+  };
+
+  // Define a minimal Cloudinary type for TypeScript
+  type Cloudinary = {
+    createUploadWidget: (
+      options: Record<string, unknown>,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      callback: (error: unknown, result: any) => void
+    ) => { open: () => void };
+  };
+
+  const openCloudinaryWidget = () => {
+    const cloudinary = (window as { cloudinary?: Cloudinary }).cloudinary;
+    if (!cloudinary) return;
+
+    const widget = cloudinary.createUploadWidget(
+      {
+        cloudName: "dlwlrv6c4",
+        uploadPreset: "mpd_db",
+        sources: ["local", "url", "camera"],
+        multiple: false,
+        cropping: false,
+        folder: "portfolio",
+        maxFileSize: 5000000,
+        clientAllowedFormats: ["jpg", "jpeg", "png"],
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (error: unknown, result: any) => {
+        if (!error && result.event === "success") {
+          setFormData((prev) => ({
+            ...prev,
+            image: result.info.secure_url,
+          }));
+        }
+      }
+    );
+
+    widget.open();
   };
 
   return (
-    <div className="max-w-6xl w-full mx-auto p-6">
+    <div className="max-w-6xl w-full mx-auto p-6 overflow-y-scroll">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Portfolio Manager</h1>
         <button
@@ -292,8 +244,7 @@ const PortfolioManager: React.FC = () => {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, type: e.target.value }))
                 }
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
+                className="w-full p-2 border border-gray-300 rounded-md"
               >
                 <option value="">Select type</option>
                 {projectTypes.map((type) => (
@@ -314,8 +265,7 @@ const PortfolioManager: React.FC = () => {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, title: e.target.value }))
                 }
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
+                className="w-full p-2 border border-gray-300 rounded-md"
               />
             </div>
 
@@ -324,62 +274,40 @@ const PortfolioManager: React.FC = () => {
                 Image
               </label>
 
-              <div
-                className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-                  dragActive
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300 hover:border-gray-400"
-                }`}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
+              <button
+                type="button"
+                onClick={openCloudinaryWidget}
+                className="bg-gray-100 border-2 border-dashed rounded-lg p-8 text-center w-full cursor-pointer hover:bg-gray-50"
               >
                 {formData.image ? (
                   <div className="space-y-2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={formData.image}
                       alt="Preview"
                       className="max-w-xs max-h-48 mx-auto rounded-lg"
                     />
-                    <p className="text-sm text-gray-600">
-                      {selectedFile ? "New image selected" : "Current image"}
-                    </p>
+                    <p className="text-sm text-gray-600">Image selected</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
                     <Upload className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="text-gray-600">
-                      Drag and drop an image here, or click to select
+                      Click to upload via Cloudinary
                     </p>
                   </div>
                 )}
-              </div>
-
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  if (e.target.files && e.target.files[0]) {
-                    handleFileSelect(e.target.files[0]);
-                  }
-                }}
-                accept="image/*"
-                className="hidden"
-              />
+              </button>
             </div>
 
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={handleSubmit}
-                disabled={isLoading || uploading}
+                disabled={isLoading}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 disabled:opacity-50"
               >
                 <Save size={20} />
-                {isLoading || uploading ? "Saving..." : "Save"}
+                {isLoading ? "Saving..." : "Save"}
               </button>
 
               <button
@@ -414,14 +342,12 @@ const PortfolioManager: React.FC = () => {
               className="bg-white rounded-lg shadow-lg overflow-hidden"
             >
               <div className="aspect-video bg-gray-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover"
                 />
               </div>
-
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
@@ -431,24 +357,20 @@ const PortfolioManager: React.FC = () => {
                     <button
                       onClick={() => startEdit(project)}
                       className="text-blue-600 hover:text-blue-800"
-                      aria-label={`Edit ${project.title}`}
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => deleteProject(project.id)}
                       className="text-red-600 hover:text-red-800"
-                      aria-label={`Delete ${project.title}`}
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
-
                 <h3 className="font-semibold text-gray-900 mb-2">
                   {project.title}
                 </h3>
-
                 <p className="text-xs text-gray-500">
                   Created: {new Date(project.createdAt).toLocaleDateString()}
                 </p>
