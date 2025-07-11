@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
-import { v4 as uuidv4 } from "uuid";
 
-const BLOB_KEY = "portfolio-data.json";
+const BLOB_URL = process.env.PORTFOLIO_JSON_URL!;
+const TOKEN = process.env.BLOB_READ_WRITE_TOKEN!;
 
 interface Project {
   id: string;
@@ -17,40 +17,50 @@ interface PortfolioData {
   projects: Project[];
 }
 
-async function readPortfolioData(): Promise<PortfolioData> {
+// Read portfolio data from blob
+const readPortfolioData = async (): Promise<PortfolioData> => {
+  const res = await fetch(BLOB_URL);
+  if (!res.ok) throw new Error("Failed to fetch blob JSON");
+  return res.json();
+};
+
+// Write portfolio data to blob
+const writePortfolioData = async (data: PortfolioData) => {
+  await put("portfolio-data.json", JSON.stringify(data, null, 2), {
+    access: "public",
+    contentType: "application/json",
+    token: TOKEN,
+  });
+};
+
+// GET all projects
+export async function GET() {
   try {
-    const res = await fetch(process.env.PORTFOLIO_JSON_URL as string);
-    return await res.json();
+    const data = await readPortfolioData();
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Read error:", error);
-    return { projects: [] };
+    return NextResponse.json(
+      { error: "Failed to read portfolio" },
+      { status: 500 }
+    );
   }
 }
 
-async function writePortfolioData(data: PortfolioData): Promise<void> {
-  await put(BLOB_KEY, JSON.stringify(data, null, 2), {
-    contentType: "application/json",
-    access: "public",
-  });
-}
-
-export async function GET() {
-  const data = await readPortfolioData();
-  return NextResponse.json(data);
-}
-
+// POST new project
 export async function POST(request: Request) {
   try {
-    const { type, title, image } = await request.json();
+    const body = await request.json();
+    const { type, title, image } = body;
+
     if (!type || !title || !image) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    const data = await readPortfolioData();
+
     const newProject: Project = {
-      id: uuidv4(),
+      id: Date.now().toString(),
       type,
       title,
       image,
@@ -58,13 +68,12 @@ export async function POST(request: Request) {
       updatedAt: new Date().toISOString(),
     };
 
-    const data = await readPortfolioData();
     data.projects.push(newProject);
     await writePortfolioData(data);
 
     return NextResponse.json(newProject, { status: 201 });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    console.error("Create error:", error);
     return NextResponse.json(
       { error: "Failed to create project" },
       { status: 500 }
