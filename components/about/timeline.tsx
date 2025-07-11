@@ -63,6 +63,7 @@ export default function Timeline() {
                   {/* Mobile layout - always same structure */}
                   <div className="block md:hidden">
                     <div className="mb-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={item.image}
                         alt={item.title}
@@ -106,6 +107,7 @@ export default function Timeline() {
                     {isLeft ? (
                       <>
                         <div className="mb-6">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={item.image}
                             alt={item.title}
@@ -178,6 +180,7 @@ export default function Timeline() {
                           </span>
                         </div> */}
                         <div>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={item.image}
                             alt={item.title}

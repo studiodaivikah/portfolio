@@ -1,36 +1,33 @@
-// app/api/upload/route.js
-import { NextResponse } from "next/server";
+// app/api/upload/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-export async function POST(request) {
+// Use File type from Web API
+export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file");
+    const file = formData.get("file") as File | null;
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Create uploads directory if it doesn't exist
     const uploadsDir = path.join(process.cwd(), "public", "uploads");
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    // Generate unique filename
     const timestamp = Date.now();
     const originalName = file.name;
     const extension = path.extname(originalName);
     const filename = `${timestamp}${extension}`;
     const filepath = path.join(uploadsDir, filename);
 
-    // Save file
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     fs.writeFileSync(filepath, buffer);
 
-    // Return the URL path
     const imageUrl = `/uploads/${filename}`;
 
     return NextResponse.json({

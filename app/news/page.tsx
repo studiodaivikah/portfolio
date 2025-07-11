@@ -57,6 +57,7 @@ const page = () => {
               className="group cursor-pointer transition-transform duration-300 hover:scale-105"
             >
               <div className="relative overflow-hidden rounded-lg shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.image}
                   alt={item.title}

@@ -1,10 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import fs from "fs";
 import path from "path";
 
+// Define the project type
+type Project = {
+  id: string;
+  type: string;
+  title: string;
+  image: string;
+  updatedAt?: string;
+};
+
+type PortfolioData = {
+  projects: Project[];
+};
+
 const DATA_FILE = path.join(process.cwd(), "data", "portfolio.json");
 
-const readPortfolioData = () => {
+// Read portfolio data
+const readPortfolioData = (): PortfolioData => {
   try {
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, "utf8");
@@ -17,7 +31,8 @@ const readPortfolioData = () => {
   }
 };
 
-const writePortfolioData = (data) => {
+// Write portfolio data
+const writePortfolioData = (data: PortfolioData): boolean => {
   try {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
     return true;
@@ -27,10 +42,16 @@ const writePortfolioData = (data) => {
   }
 };
 
+// Helper to extract ID from request
+const getIdFromRequest = (request: NextRequest): string => {
+  const segments = request.nextUrl.pathname.split("/");
+  return segments[segments.length - 1];
+};
+
 // GET - Read single project
-export async function GET(request, { params }) {
+export async function GET(request: NextRequest) {
   try {
-    const { id } = params;
+    const id = getIdFromRequest(request);
     const data = readPortfolioData();
     const project = data.projects.find((p) => p.id === id);
 
@@ -39,6 +60,7 @@ export async function GET(request, { params }) {
     }
 
     return NextResponse.json(project);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to read project" },
@@ -48,10 +70,10 @@ export async function GET(request, { params }) {
 }
 
 // PUT - Update project
-export async function PUT(request, { params }) {
+export async function PUT(request: NextRequest) {
   try {
-    const { id } = params;
-    const body = await request.json();
+    const id = getIdFromRequest(request);
+    const body = (await request.json()) as Partial<Project>;
     const { type, title, image } = body;
 
     if (!type || !title || !image) {
@@ -84,6 +106,7 @@ export async function PUT(request, { params }) {
         { status: 500 }
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to update project" },
@@ -93,9 +116,9 @@ export async function PUT(request, { params }) {
 }
 
 // DELETE - Delete project
-export async function DELETE(request, { params }) {
+export async function DELETE(request: NextRequest) {
   try {
-    const { id } = params;
+    const id = getIdFromRequest(request);
     const data = readPortfolioData();
     const projectIndex = data.projects.findIndex((p) => p.id === id);
 
@@ -113,6 +136,7 @@ export async function DELETE(request, { params }) {
         { status: 500 }
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to delete project" },

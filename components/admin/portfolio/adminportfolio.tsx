@@ -1,20 +1,40 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  DragEvent,
+} from "react";
 import { Upload, Plus, Edit, Trash2, Save, X } from "lucide-react";
 
-const PortfolioManager = () => {
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [editingProject, setEditingProject] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-  const [formData, setFormData] = useState({
+type Project = {
+  id: string;
+  type: string;
+  title: string;
+  image: string;
+  createdAt: string; // or Date, depending on API response
+};
+
+type FormDataType = {
+  type: string;
+  title: string;
+  image: string;
+};
+
+const PortfolioManager: React.FC = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormDataType>({
     type: "",
     title: "",
     image: "",
   });
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const projectTypes = [
     "all items",
@@ -30,6 +50,7 @@ const PortfolioManager = () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/portfolio");
+      if (!response.ok) throw new Error("Failed to fetch projects");
       const data = await response.json();
       setProjects(data.projects || []);
     } catch (error) {
@@ -44,36 +65,36 @@ const PortfolioManager = () => {
   }, []);
 
   // Handle file selection
-  const handleFileSelect = (file) => {
+  const handleFileSelect = (file: File | null) => {
     if (file && file.type.startsWith("image/")) {
       setSelectedFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFormData((prev) => ({ ...prev, image: e.target.result }));
+        setFormData((prev) => ({ ...prev, image: e.target?.result as string }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Handle drag and drop
-  const handleDragEnter = (e) => {
+  // Drag and drop handlers with proper typing
+  const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(true);
   };
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
@@ -85,7 +106,7 @@ const PortfolioManager = () => {
   };
 
   // Upload image
-  const uploadImage = async (file) => {
+  const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -111,7 +132,9 @@ const PortfolioManager = () => {
   };
 
   // Create project
-  const createProject = async (projectData) => {
+  const createProject = async (
+    projectData: Omit<Project, "id" | "createdAt">
+  ): Promise<Project> => {
     try {
       const response = await fetch("/api/portfolio", {
         method: "POST",
@@ -125,7 +148,7 @@ const PortfolioManager = () => {
         throw new Error("Failed to create project");
       }
 
-      const newProject = await response.json();
+      const newProject: Project = await response.json();
       setProjects((prev) => [...prev, newProject]);
       return newProject;
     } catch (error) {
@@ -135,7 +158,10 @@ const PortfolioManager = () => {
   };
 
   // Update project
-  const updateProject = async (id, projectData) => {
+  const updateProject = async (
+    id: string,
+    projectData: Omit<Project, "id" | "createdAt">
+  ): Promise<Project> => {
     try {
       const response = await fetch(`/api/portfolio/${id}`, {
         method: "PUT",
@@ -149,7 +175,7 @@ const PortfolioManager = () => {
         throw new Error("Failed to update project");
       }
 
-      const updatedProject = await response.json();
+      const updatedProject: Project = await response.json();
       setProjects((prev) =>
         prev.map((p) => (p.id === id ? updatedProject : p))
       );
@@ -161,7 +187,7 @@ const PortfolioManager = () => {
   };
 
   // Delete project
-  const deleteProject = async (id) => {
+  const deleteProject = async (id: string) => {
     try {
       const response = await fetch(`/api/portfolio/${id}`, {
         method: "DELETE",
@@ -209,14 +235,14 @@ const PortfolioManager = () => {
       setFormData({ type: "", title: "", image: "" });
       setSelectedFile(null);
     } catch (error) {
-      alert("Error saving project: " + error.message);
+      alert("Error saving project: " + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }
   };
 
   // Start editing
-  const startEdit = (project) => {
+  const startEdit = (project: Project) => {
     setEditingProject(project);
     setFormData({
       type: project.type,
@@ -247,7 +273,6 @@ const PortfolioManager = () => {
         </button>
       </div>
 
-      {/* Add/Edit Form */}
       {(showAddForm || editingProject) && (
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">
@@ -296,7 +321,6 @@ const PortfolioManager = () => {
                 Image
               </label>
 
-              {/* Drag and Drop Area */}
               <div
                 className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
                   dragActive
@@ -311,6 +335,7 @@ const PortfolioManager = () => {
               >
                 {formData.image ? (
                   <div className="space-y-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={formData.image}
                       alt="Preview"
@@ -333,7 +358,11 @@ const PortfolioManager = () => {
               <input
                 type="file"
                 ref={fileInputRef}
-                onChange={(e) => handleFileSelect(e.target.files[0])}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handleFileSelect(e.target.files[0]);
+                  }
+                }}
                 accept="image/*"
                 className="hidden"
               />
@@ -363,7 +392,6 @@ const PortfolioManager = () => {
         </div>
       )}
 
-      {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <div className="col-span-full text-center py-8">
@@ -383,6 +411,7 @@ const PortfolioManager = () => {
               className="bg-white rounded-lg shadow-lg overflow-hidden"
             >
               <div className="aspect-video bg-gray-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.image}
                   alt={project.title}
@@ -399,12 +428,14 @@ const PortfolioManager = () => {
                     <button
                       onClick={() => startEdit(project)}
                       className="text-blue-600 hover:text-blue-800"
+                      aria-label={`Edit ${project.title}`}
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => deleteProject(project.id)}
                       className="text-red-600 hover:text-red-800"
+                      aria-label={`Delete ${project.title}`}
                     >
                       <Trash2 size={16} />
                     </button>

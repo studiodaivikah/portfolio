@@ -47,6 +47,7 @@ const Showcase = () => {
       <div className="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-3 gap-y-14 gap-6 w-full">
         {ALL.map((item) => (
           <div key={item.id} className="relative overflow-hidden shadow-lg">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={item.image}
               alt={"img"}

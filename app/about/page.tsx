@@ -11,6 +11,7 @@ const page = () => {
     <section className="w-full flex-col flex-center">
       <Navbar />
       <div className="w-full flex-center py-28">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="h-[500px] w-screen absolute opacity-50"
           src={"/images/abt_main.jpg"}

@@ -1,12 +1,25 @@
-// app/api/portfolio/route.js
+// app/api/portfolio/route.ts
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
 const DATA_FILE = path.join(process.cwd(), "data", "portfolio.json");
 
+interface Project {
+  id: string;
+  type: string;
+  title: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface PortfolioData {
+  projects: Project[];
+}
+
 // Ensure data directory exists
-const ensureDataDirectory = () => {
+const ensureDataDirectory = (): void => {
   const dataDir = path.join(process.cwd(), "data");
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -14,12 +27,12 @@ const ensureDataDirectory = () => {
 };
 
 // Read portfolio data
-const readPortfolioData = () => {
+const readPortfolioData = (): PortfolioData => {
   ensureDataDirectory();
   try {
     if (fs.existsSync(DATA_FILE)) {
       const data = fs.readFileSync(DATA_FILE, "utf8");
-      return JSON.parse(data);
+      return JSON.parse(data) as PortfolioData;
     }
     return { projects: [] };
   } catch (error) {
@@ -29,7 +42,7 @@ const readPortfolioData = () => {
 };
 
 // Write portfolio data
-const writePortfolioData = (data) => {
+const writePortfolioData = (data: PortfolioData): boolean => {
   ensureDataDirectory();
   try {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
@@ -41,10 +54,11 @@ const writePortfolioData = (data) => {
 };
 
 // GET - Read all projects
-export async function GET() {
+export async function GET(): Promise<Response> {
   try {
     const data = readPortfolioData();
     return NextResponse.json(data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to read portfolio data" },
@@ -54,10 +68,14 @@ export async function GET() {
 }
 
 // POST - Create new project
-export async function POST(request) {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body = await request.json();
-    const { type, title, image } = body;
+    const { type, title, image } = body as {
+      type?: string;
+      title?: string;
+      image?: string;
+    };
 
     if (!type || !title || !image) {
       return NextResponse.json(
@@ -67,7 +85,7 @@ export async function POST(request) {
     }
 
     const data = readPortfolioData();
-    const newProject = {
+    const newProject: Project = {
       id: Date.now().toString(),
       type,
       title,
@@ -86,6 +104,7 @@ export async function POST(request) {
         { status: 500 }
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to create project" },

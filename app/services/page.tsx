@@ -6,17 +6,25 @@ import Navbar from "@/components/nav/navbar";
 import Image from "next/image";
 import React, { useState } from "react";
 
-const ServicesPage = () => {
-  const [expandedItems, setExpandedItems] = useState({});
+type Service = {
+  id: string;
+  title: string;
+  content: string;
+};
 
-  const toggleExpansion = (itemId) => {
+const ServicesPage: React.FC = () => {
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {}
+  );
+
+  const toggleExpansion = (itemId: string) => {
     setExpandedItems((prev) => ({
       ...prev,
       [itemId]: !prev[itemId],
     }));
   };
 
-  const services = [
+  const services: Service[] = [
     {
       id: "architectural-design",
       title: "Architectural Design",
@@ -43,7 +51,7 @@ const ServicesPage = () => {
     },
   ];
 
-  const additionalServices = [
+  const additionalServices: Service[] = [
     {
       id: "project-management",
       title: "Project Management",
@@ -64,7 +72,7 @@ const ServicesPage = () => {
     },
   ];
 
-  const designServices = [
+  const designServices: Service[] = [
     {
       id: "design-excellence",
       title: "Design Excellence",
@@ -85,7 +93,15 @@ const ServicesPage = () => {
     },
   ];
 
-  const ServiceItem = ({ service, className = "" }) => {
+  type ServiceItemProps = {
+    service: Service;
+    className?: string;
+  };
+
+  const ServiceItem: React.FC<ServiceItemProps> = ({
+    service,
+    className = "",
+  }) => {
     const isExpanded = expandedItems[service.id];
 
     return (
@@ -93,6 +109,13 @@ const ServicesPage = () => {
         <div
           className="flex-between w-full cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors duration-200"
           onClick={() => toggleExpansion(service.id)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              toggleExpansion(service.id);
+            }
+          }}
         >
           <p className="text-black text-[24px] font-medium">{service.title}</p>
           <Image
@@ -100,9 +123,7 @@ const ServicesPage = () => {
             height={20}
             width={20}
             alt={isExpanded ? "minus" : "plus"}
-            className={`transition-all duration-300 ease-in-out ${
-              isExpanded ? "rotate-0" : "rotate-0"
-            }`}
+            className="transition-all duration-300 ease-in-out"
           />
         </div>
         <div
@@ -129,6 +150,7 @@ const ServicesPage = () => {
     <section className="w-full flex-center flex-col">
       <Navbar />
       <div className="w-full flex-center border-b border-b-black">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/ser_main.jpg"
           alt="Services Hero"
@@ -166,6 +188,7 @@ const ServicesPage = () => {
         {/* First Services Section */}
         <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/ser_pic_1.jpg"
               alt="Studio Daivikah Services"
@@ -173,7 +196,7 @@ const ServicesPage = () => {
             />
             <p className="text-[24px] leading-8 mt-6 font-medium text-black">
               Studio Daivikah: Our practice is rooted in thoughtful design,
-              meticulous planning, and an unwavering focus on our clients'
+              meticulous planning, and an unwavering focus on our clients&apos;
               vision
             </p>
             <div className="border border-gray-400/50 w-full h-px mt-3" />
@@ -195,6 +218,7 @@ const ServicesPage = () => {
         {/* Second Services Section */}
         <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/ser_pic_2.jpg"
               alt="Additional Services"
@@ -221,6 +245,7 @@ const ServicesPage = () => {
           </div>
 
           <div className="flex flex-col items-start max-w-[500px] w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/ser_pic_2.jpg"
               alt="Design Excellence"
