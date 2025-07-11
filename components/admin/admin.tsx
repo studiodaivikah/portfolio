@@ -29,7 +29,7 @@ const Admin = () => {
           </div>
         </div>
       </main>
-      <main className="border">
+      <main className="max-w-[1440px] w-full flex-center">
         {currentpage === "portfolio" ? (
           <PortfolioManager />
         ) : currentpage === "news" ? (
