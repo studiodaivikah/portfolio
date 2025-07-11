@@ -30,7 +30,6 @@ const PortfolioManager: React.FC = () => {
   });
 
   const projectTypes = [
-    "all items",
     "architecture",
     "interior design",
     "visualization",
