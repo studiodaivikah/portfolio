@@ -1,14 +1,142 @@
+"use client";
+
 import Footer from "@/components/footer/footer";
 import MainFooter from "@/components/footer/mainfooter";
-import React from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 
-const page = () => {
+const ServicesPage = () => {
+  const [expandedItems, setExpandedItems] = useState({});
+
+  const toggleExpansion = (itemId) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [itemId]: !prev[itemId],
+    }));
+  };
+
+  const services = [
+    {
+      id: "architectural-design",
+      title: "Architectural Design",
+      content:
+        "Our architectural design services focus on creating innovative and functional spaces that reflect your vision. We combine creativity with technical expertise to deliver designs that are both aesthetically pleasing and structurally sound.",
+    },
+    {
+      id: "3d-modeling",
+      title: "3D Modeling & Visualization",
+      content:
+        "Transform your ideas into stunning visual representations with our advanced 3D modeling and visualization services. We create photorealistic renders that help you visualize your project before construction begins.",
+    },
+    {
+      id: "interior-design",
+      title: "Interior Design",
+      content:
+        "Our interior design services create harmonious and functional living spaces that reflect your personality and lifestyle. We focus on optimizing space utilization while maintaining aesthetic appeal.",
+    },
+    {
+      id: "urban-planning",
+      title: "Urban Planning",
+      content:
+        "We provide comprehensive urban planning solutions that consider environmental impact, community needs, and sustainable development practices to create livable and thriving urban spaces.",
+    },
+  ];
+
+  const additionalServices = [
+    {
+      id: "project-management",
+      title: "Project Management",
+      content:
+        "Our project management services ensure your architectural projects are completed on time, within budget, and to the highest quality standards. We coordinate all aspects of construction and design implementation.",
+    },
+    {
+      id: "interior-architecture",
+      title: "Interior Architecture",
+      content:
+        "Specializing in the structural and spatial aspects of interior spaces, we create functional and beautiful environments that seamlessly integrate with the overall architectural design.",
+    },
+    {
+      id: "3d-visualization",
+      title: "3D Visualization",
+      content:
+        "Our cutting-edge 3D visualization services bring your architectural concepts to life with stunning detail and accuracy, helping stakeholders understand and approve design concepts.",
+    },
+  ];
+
+  const designServices = [
+    {
+      id: "design-excellence",
+      title: "Design Excellence",
+      content:
+        "We are committed to delivering design excellence through innovative approaches, attention to detail, and a deep understanding of our clients' needs and aspirations.",
+    },
+    {
+      id: "sustainable-architecture",
+      title: "Sustainable Architecture",
+      content:
+        "Our sustainable architecture practices focus on creating environmentally responsible buildings that minimize energy consumption and reduce environmental impact while maintaining comfort and functionality.",
+    },
+    {
+      id: "spatial-planning",
+      title: "Spatial Planning",
+      content:
+        "Expert spatial planning services that optimize the use of available space, ensuring efficient flow, functionality, and aesthetic appeal in every project we undertake.",
+    },
+  ];
+
+  const ServiceItem = ({ service, className = "" }) => {
+    const isExpanded = expandedItems[service.id];
+
+    return (
+      <div className={`w-full ${className}`}>
+        <div
+          className="flex-between w-full cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors duration-200"
+          onClick={() => toggleExpansion(service.id)}
+        >
+          <p className="text-black text-[24px] font-medium">{service.title}</p>
+          <Image
+            src={isExpanded ? "/icons/minus.svg" : "/icons/plus.svg"}
+            height={20}
+            width={20}
+            alt={isExpanded ? "minus" : "plus"}
+            className={`transition-all duration-300 ease-in-out ${
+              isExpanded ? "rotate-0" : "rotate-0"
+            }`}
+          />
+        </div>
+        <div
+          className={`overflow-hidden transition-all duration-700 ease-in-out ${
+            isExpanded ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div
+            className={`pt-4 pb-2 transition-all duration-300 ease-in-out ${
+              isExpanded ? "translate-y-0" : "-translate-y-2"
+            }`}
+          >
+            <p className="text-[16px] leading-6 font-normal text-gray-700">
+              {service.content}
+            </p>
+          </div>
+        </div>
+        <div className="w-full h-px border border-gray-300/50 mt-4" />
+      </div>
+    );
+  };
+
   return (
     <section className="w-full flex-center flex-col">
+      {/* Hero Section */}
       <div className="w-full flex-center border-b border-b-black">
-        <img src={"/images/ser_pic_1.jpg"} className="w-screen h-[400px]"/>
+        <img
+          src="/images/ser_main.jpg"
+          alt="Services Hero"
+          className="w-screen h-[500px]"
+        />
       </div>
+
       <div className="max-w-[1200px] w-full px-10 py-14 flex items-start justify-center flex-col">
+        {/* Header Section */}
         <div className="flex flex-col items-start w-full justify-center gap-y-5">
           <div className="flex-between w-full">
             <p className="text-[16px] font-normal text-black">
@@ -18,11 +146,13 @@ const page = () => {
               Shaping the Future Today
             </p>
           </div>
+
           <div className="flex-center">
-            <p className="text-center text-black font-extrabold text-[140px]">
+            <p className="text-center text-black font-extrabold text-[80px] sm:text-[100px] md:text-[120px] lg:text-[140px]">
               SERVICES
             </p>
           </div>
+
           <div className="flex-center max-w-[700px] w-full">
             <p className="text-[24px] text-black font-normal leading-7">
               Delivering architectural services with innovation, precision, and
@@ -32,12 +162,17 @@ const page = () => {
           </div>
         </div>
 
-        <div className="flex justify-between max-w-[1000px] w-full py-16">
+        {/* First Services Section */}
+        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
-            <div className="border w-[500px] h-[260px]"></div>
+            <img
+              src="/images/ser_pic_1.jpg"
+              alt="Studio Daivikah Services"
+              className="h-[260px] w-full object-cover rounded-lg"
+            />
             <p className="text-[24px] leading-8 mt-6 font-medium text-black">
-              Studio Daivikah : Our practice is rooted in thoughtful design,
-              meticulous planning, and an unwavering focus on our clients&apos;
+              Studio Daivikah: Our practice is rooted in thoughtful design,
+              meticulous planning, and an unwavering focus on our clients'
               vision
             </p>
             <div className="border border-gray-400/50 w-full h-px mt-3" />
@@ -50,97 +185,50 @@ const page = () => {
           </div>
 
           <div className="flex flex-col items-start max-w-[400px] w-full gap-y-4">
-            <div className="flex-between w-full">
-              <p className="text-black text-[24px] font-medium">
-                Architectural Design
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-medium">
-                3D Modeling & Visualization
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-medium">
-                Interior Design
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-medium">
-                Urban Planning
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
+            {services.map((service) => (
+              <ServiceItem key={service.id} service={service} />
+            ))}
           </div>
         </div>
 
-        <div className="flex justify-between max-w-[1000px] w-full py-16">
+        {/* Second Services Section */}
+        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
-            <div className="border size-[500px]"></div>
+            <img
+              src="/images/ser_pic_2.jpg"
+              alt="Additional Services"
+              className="h-[400px] w-full object-cover rounded-lg"
+            />
           </div>
 
           <div className="flex flex-col items-start max-w-[400px] w-full gap-y-4">
-            <div className="flex-between w-full">
-              <p className="text-black text-[24px] font-normal">
-                Project Management
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-normal">
-                Interior Architecture
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-normal">
-                3D Visualization
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
+            {additionalServices.map((service) => (
+              <ServiceItem key={service.id} service={service} />
+            ))}
           </div>
         </div>
 
-        <div className="flex justify-between max-w-[1000px] w-full py-16">
+        {/* Third Services Section */}
+        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[400px] w-full gap-y-4">
-            <p className="text-black font-medium text-[26px]">
+            <p className="text-black font-medium text-[26px] mb-4">
               Innovative Spaces. Timeless Designs.
             </p>
-            <div className="flex-between w-full">
-              <p className="text-black text-[24px] font-normal">
-                Design Excellence
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-normal">
-                Sustainable Architecture
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
-            <div className="w-full h-px border border-gray-300/50" />
-            <div className="flex-between w-full mt-2">
-              <p className="text-black text-[24px] font-normal">
-                Spatial Planning
-              </p>
-              <div className="text-black text-[24px]">+</div>
-            </div>
+            {designServices.map((service) => (
+              <ServiceItem key={service.id} service={service} />
+            ))}
           </div>
+
           <div className="flex flex-col items-start max-w-[500px] w-full">
-            <div className="border size-[500px]"></div>
+            <img
+              src="/images/ser_pic_2.jpg"
+              alt="Design Excellence"
+              className="h-[400px] w-full object-cover rounded-lg"
+            />
           </div>
         </div>
 
+        {/* Team Section */}
         <div className="flex flex-col items-start w-full justify-center gap-y-5">
           <div className="flex-between w-full">
             <p className="text-[16px] font-normal text-black">
@@ -150,11 +238,13 @@ const page = () => {
               Crafting Future Landmarks
             </p>
           </div>
+
           <div className="flex-center">
             <p className="text-center text-black font-extrabold text-[140px]">
               TEAM
             </p>
           </div>
+
           <div className="flex-center max-w-[700px] w-full">
             <p className="text-[24px] text-black font-normal leading-7">
               Studio Daivaikah welcomes you! Together, we build extraordinary
@@ -171,4 +261,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ServicesPage;
