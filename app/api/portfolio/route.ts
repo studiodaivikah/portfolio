@@ -30,6 +30,7 @@ const writePortfolioData = async (data: PortfolioData) => {
     access: "public",
     contentType: "application/json",
     token: TOKEN,
+    allowOverwrite: true, // ✅ Add this line
   });
 };
 
