@@ -4,6 +4,8 @@ import { put } from "@vercel/blob";
 const BLOB_URL = process.env.PORTFOLIO_JSON_URL!;
 const TOKEN = process.env.BLOB_READ_WRITE_TOKEN!;
 
+console.log(TOKEN)
+
 interface Project {
   id: string;
   type: string;
@@ -90,6 +92,7 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const id = getIdFromRequest(request);
+    console.log(id)
     const data = await readPortfolioData();
     const index = data.projects.findIndex((p) => p.id === id);
     if (index === -1)

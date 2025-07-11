@@ -235,7 +235,10 @@ const PortfolioManager: React.FC = () => {
       setFormData({ type: "", title: "", image: "" });
       setSelectedFile(null);
     } catch (error) {
-      alert("Error saving project: " + (error instanceof Error ? error.message : String(error)));
+      alert(
+        "Error saving project: " +
+          (error instanceof Error ? error.message : String(error))
+      );
     } finally {
       setIsLoading(false);
     }
