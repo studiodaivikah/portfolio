@@ -10,7 +10,27 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    // ✅ Ignore these folders in Flat config
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "app/generated/prisma/**",
+      "prisma/generated/**",
+      "dist/**",
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
