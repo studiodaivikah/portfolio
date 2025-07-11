@@ -1,10 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import PortfolioManager from "./portfolio/adminportfolio";
-
-const News = () => {
-  return <main>news</main>;
-};
+import AdminNews from "./news/adminnews";
 
 const Admin = () => {
   const [currentpage, setCurrentpage] = useState("");
@@ -33,9 +30,13 @@ const Admin = () => {
         {currentpage === "portfolio" ? (
           <PortfolioManager />
         ) : currentpage === "news" ? (
-          <News />
+          <AdminNews />
         ) : (
-          <>Click on portfolio or news</>
+          <main className="flex-center w-full max-w-[1140px] h-screen">
+            <p className="text-[20px] text-gray-500 font-normal">
+              Click on portfolio or news
+            </p>
+          </main>
         )}
       </main>
     </main>

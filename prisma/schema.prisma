@@ -15,3 +15,12 @@ model Project {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model News {
+  id        String   @id @default(cuid())
+  src       String
+  title     String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

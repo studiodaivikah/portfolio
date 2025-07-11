@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   const uploadResult = await new Promise((resolve, reject) => {
     cloudinary.uploader
-      .upload_stream({ folder: "portfolio" }, (err, result) => {
+      .upload_stream({ folder: "mpd" }, (err, result) => {
         if (err || !result) reject(err);
         else resolve(result);
       })

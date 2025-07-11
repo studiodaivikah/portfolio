@@ -196,7 +196,7 @@ const PortfolioManager: React.FC = () => {
         sources: ["local", "url", "camera"],
         multiple: false,
         cropping: false,
-        folder: "portfolio",
+        folder: "mpd",
         maxFileSize: 5000000,
         clientAllowedFormats: ["jpg", "jpeg", "png"],
       },
@@ -265,6 +265,7 @@ const PortfolioManager: React.FC = () => {
                   setFormData((prev) => ({ ...prev, title: e.target.value }))
                 }
                 className="w-full p-2 border border-gray-300 rounded-md"
+                placeholder="Enter Title"
               />
             </div>
 
