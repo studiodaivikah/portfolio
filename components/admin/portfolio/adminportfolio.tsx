@@ -217,10 +217,12 @@ const PortfolioManager: React.FC = () => {
   return (
     <div className="max-w-6xl w-full mx-auto p-6 overflow-y-scroll">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Portfolio Manager</h1>
+        <h1 className="text-xl sm:text-3xl font-bold text-gray-900">
+          Portfolio Manager
+        </h1>
         <button
           onClick={() => setShowAddForm(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+          className="bg-blue-600 cursor-pointer text-white px-4 py-2 text-[12px] sm:text-[16px] rounded-lg hover:bg-blue-700 flex items-center gap-2"
         >
           <Plus size={20} />
           Add Project
@@ -304,7 +306,7 @@ const PortfolioManager: React.FC = () => {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 disabled:opacity-50"
+                className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 disabled:opacity-50"
               >
                 <Save size={20} />
                 {isLoading ? "Saving..." : "Save"}
@@ -313,7 +315,7 @@ const PortfolioManager: React.FC = () => {
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2"
+                className="bg-gray-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2"
               >
                 <X size={20} />
                 Cancel
@@ -356,13 +358,13 @@ const PortfolioManager: React.FC = () => {
                   <div className="flex gap-1">
                     <button
                       onClick={() => startEdit(project)}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-blue-600 cursor-pointer hover:text-blue-800"
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => deleteProject(project.id)}
-                      className="text-red-600 hover:text-red-800"
+                      className="text-red-600 cursor-pointer hover:text-red-800"
                     >
                       <Trash2 size={16} />
                     </button>

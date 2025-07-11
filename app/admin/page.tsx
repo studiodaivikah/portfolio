@@ -1,6 +1,7 @@
 "use client";
 
 import Admin from "@/components/admin/admin";
+import Footer from "@/components/footer/footer";
 import { useState } from "react";
 
 export default function AdminLoginPage() {
@@ -32,34 +33,59 @@ export default function AdminLoginPage() {
       {auth ? (
         <Admin />
       ) : (
-        <div className="min-h-screen flex flex-col justify-center items-center p-4">
-          <h1 className="text-2xl font-bold mb-4">Admin Login</h1>
-          <form
-            onSubmit={handleLogin}
-            className="flex flex-col gap-4 w-full max-w-sm"
-          >
-            <input
-              type="text"
-              placeholder="Username"
-              className="border rounded px-3 py-2 w-[300px]"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="border rounded px-3 py-2 w-[300px]"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-            >
-              Login
-            </button>
-          </form>
-          {status && <p className="mt-4 text-center">{status}</p>}
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-12 max-w-[2800px] w-full">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 animate-fade-in">
+            <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+              Admin Login
+            </h1>
+
+            <form onSubmit={handleLogin} className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter username"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter password"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition duration-300"
+              >
+                Login
+              </button>
+            </form>
+
+            {status && (
+              <p
+                className={`mt-5 text-center text-sm ${
+                  status.startsWith("✅") ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {status}
+              </p>
+            )}
+          </div>
         </div>
       )}
     </>
