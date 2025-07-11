@@ -10,6 +10,7 @@ import { z } from "zod";
 import Image from "next/image";
 import MainFooter from "@/components/footer/mainfooter";
 import Footer from "@/components/footer/footer";
+import Navbar from "@/components/nav/navbar";
 
 const ContactSchema = z.object({
   name: z
@@ -63,6 +64,7 @@ const ContactForm = () => {
 
   return (
     <main className="flex-center flex-col max-w-[2800px] w-full">
+      <Navbar />
       <div className="w-screen border h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
         <Image
           fill

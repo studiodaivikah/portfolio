@@ -2,6 +2,7 @@
 
 import Footer from "@/components/footer/footer";
 import MainFooter from "@/components/footer/mainfooter";
+import Navbar from "@/components/nav/navbar";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -126,7 +127,7 @@ const ServicesPage = () => {
 
   return (
     <section className="w-full flex-center flex-col">
-      {/* Hero Section */}
+      <Navbar />
       <div className="w-full flex-center border-b border-b-black">
         <img
           src="/images/ser_main.jpg"

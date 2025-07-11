@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Footer from "@/components/footer/footer";
+import Navbar from "@/components/nav/navbar";
 
 const all_news = [
   {
@@ -44,6 +45,7 @@ const all_news = [
 const page = () => {
   return (
     <section className="flex-center w-full flex-col gap-y-6">
+      <Navbar />
       <h1 className="text-center text-black font-extrabold py-8 md:py-14 text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
         NEWS
       </h1>

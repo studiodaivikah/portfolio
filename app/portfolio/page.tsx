@@ -1,5 +1,6 @@
 "use client";
 import Footer from "@/components/footer/footer";
+import Navbar from "@/components/nav/navbar";
 import React, { useState } from "react";
 
 const PortfolioButtons = [
@@ -156,13 +157,14 @@ const Page = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center space-y-4 px-4">
+    <section className="w-full flex flex-col items-center space-y-4">
+      <Navbar />
       <h1 className="text-center text-black font-extrabold py-8 md:py-14 text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
         PORTFOLIO
       </h1>
 
       {/* Filter Buttons */}
-      <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 max-w-4xl w-full -mt-6">
+      <div className="flex flex-wrap justify-center px-4 items-center gap-2 md:gap-4 max-w-4xl w-full -mt-6">
         {PortfolioButtons.map((item) => (
           <button
             onClick={() => setItemName(item.label)}

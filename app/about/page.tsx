@@ -4,10 +4,12 @@ import Timeline from "@/components/about/timeline";
 import React from "react";
 import Image from "next/image";
 import Showcase from "@/components/about/showcase";
+import Navbar from "@/components/nav/navbar";
 
 const page = () => {
   return (
     <section className="w-full flex-col flex-center">
+      <Navbar />
       <div className="w-full flex-center py-28">
         <img
           className="h-[500px] w-screen absolute opacity-50"
