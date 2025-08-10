@@ -234,10 +234,10 @@ const ContactForm = () => {
           </form>
         </div>
       </section>
-      <div className="flex-center w-full h-[400px] bg-black">
-        <div className="bg-white w-full h-[300px] rounded-[20px] flex justify-between max-w-[1140px] px-6 sm:px-10 md:px-20">
-          <div className="flex-center gap-10 w-full h-full overflow-hidden">
-            <div className="relative w-[460px] h-[300px] -mb-26">
+      <div className="flex-center w-full px-4 h-[400px] bg-black">
+        <div className="bg-white w-full h-[360px] py-4 sm:py-0 sm:h-[300px] rounded-[20px] flex justify-between max-w-[1140px] px-6 sm:px-10 md:px-20">
+          <div className="flex items-center justify-center flex-col sm:flex-row gap-10 w-full h-full overflow-hidden">
+            <div className="relative w-[460px] h-[400px] sm:h-[300px] sm:-mb-26">
               <Image
                 fill
                 src="/images/footerbg.jpg"
@@ -246,7 +246,7 @@ const ContactForm = () => {
               />
             </div>
             <div className="flex flex-col items-start jsutify-start gap-4">
-              <p className="text-black max-w-[700px] w-full text-start text-wrap text-[28px] md:text-[46px] lg:text-[60px] leading-10 sm:leading-16 lg:leading-20 font-bold">
+              <p className="text-black max-w-[700px] w-full text-start text-wrap text-[28px] md:text-[46px] lg:text-[60px] leading-8 sm:leading-12 lg:leading-20 font-bold">
                 CONTACT US FOR SOLUTIONS
               </p>
               <p className="text-[16px]">

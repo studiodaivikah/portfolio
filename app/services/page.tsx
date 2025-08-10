@@ -117,7 +117,7 @@ const ServicesPage: React.FC = () => {
             }
           }}
         >
-          <p className="text-black text-[24px] font-medium">{service.title}</p>
+          <p className="text-black text-[16px] sm:text-[24px] font-medium">{service.title}</p>
           <Image
             src={isExpanded ? "/icons/minus.svg" : "/icons/plus.svg"}
             height={20}
@@ -154,24 +154,24 @@ const ServicesPage: React.FC = () => {
         <img
           src="/images/ser_main.jpg"
           alt="Services Hero"
-          className="w-screen h-[500px]"
+          className="w-screen h-[300px] sm:h-[500px]"
         />
       </div>
 
       <div className="max-w-[1200px] w-full px-10 py-14 flex items-start justify-center flex-col">
         {/* Header Section */}
         <div className="flex flex-col items-start w-full justify-center gap-y-5">
-          <div className="flex-between w-full">
-            <p className="text-[16px] font-normal text-black">
+          <div className="flex-between gap-2 w-full">
+            <p className="text-[14px] sm:text-[16px] font-normal text-black">
               Design. Build. Inspire
             </p>
-            <p className="text-[16px] font-normal text-black">
+            <p className="text-[14px] sm:text-[16px] font-normal text-black">
               Shaping the Future Today
             </p>
           </div>
 
           <div className="flex-center">
-            <p className="text-center text-black font-extrabold text-[80px] sm:text-[100px] md:text-[120px] lg:text-[140px]">
+            <p className="text-center text-black font-extrabold text-[40px] sm:text-[100px] md:text-[120px] lg:text-[140px]">
               SERVICES
             </p>
           </div>
@@ -186,7 +186,7 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* First Services Section */}
-        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -216,7 +216,7 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* Second Services Section */}
-        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[500px] w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -234,7 +234,7 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* Third Services Section */}
-        <div className="flex justify-between max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
           <div className="flex flex-col items-start max-w-[400px] w-full gap-y-4">
             <p className="text-black font-medium text-[26px] mb-4">
               Innovative Spaces. Timeless Designs.
@@ -266,7 +266,7 @@ const ServicesPage: React.FC = () => {
           </div>
 
           <div className="flex-center">
-            <p className="text-center text-black font-extrabold text-[140px]">
+            <p className="text-center text-black font-extrabold text-[70px] md:text-[120px] lg:text-[140px]">
               TEAM
             </p>
           </div>

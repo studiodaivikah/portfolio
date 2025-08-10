@@ -17,14 +17,14 @@ const page = () => {
           src={"/images/abt_main.jpg"}
           alt="pic1"
         />
-        <p className="text-center z-50 text-black font-extrabold text-[80px] md:text-[120px] lg:text-[140px]">
+        <p className="text-center z-50 text-black font-extrabold text-[70px] md:text-[120px] lg:text-[140px]">
           ABOUT
         </p>
       </div>
       <div className="flex flex-col my-32 md:flex-row md:justify-between max-w-[1240px] w-full px-10">
         <div className="flex-start flex-col gap-y-3">
           <p className="text-[24px] text-black font-medium">Studio Daivikah</p>
-          <p className="text-[18px] ml-24 sm:ml-32 lg:ml-36 text-black font-normal">
+          <p className="text-[18px] ml-14 text-nowrap sm:ml-32 lg:ml-36 text-black font-normal">
             &quot;Concept to Creation&quot;
           </p>
           <p className="text-[18px] max-w-[600px] w-full text-black font-normal">
