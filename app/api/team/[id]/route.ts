@@ -28,7 +28,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
 
-    const updatedImage = await prisma.showcase.update({
+    const updatedImage = await prisma.team.update({
       where: { id },
       data: { image },
     });
@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   
   try {
-    const deletedImage = await prisma.showcase.delete({ where: { id } });
+    const deletedImage = await prisma.team.delete({ where: { id } });
     return NextResponse.json(deletedImage);
   } catch (error) {
     console.error("DELETE error:", error);

@@ -3,6 +3,7 @@
 import Footer from "@/components/footer/footer";
 import MainFooter from "@/components/footer/mainfooter";
 import Navbar from "@/components/nav/navbar";
+import Team from "@/components/services/Team";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -265,11 +266,7 @@ const ServicesPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex-center">
-            <p className="text-center text-black font-extrabold text-[70px] md:text-[120px] lg:text-[140px]">
-              TEAM
-            </p>
-          </div>
+          <Team />
 
           <div className="flex-center max-w-[700px] w-full">
             <p className="text-[24px] text-black font-normal leading-7">

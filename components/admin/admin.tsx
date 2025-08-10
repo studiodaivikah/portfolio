@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import PortfolioManager from "./portfolio/adminportfolio";
-import AdminNews from "./news/adminnews"
+import AdminNews from "./news/adminnews";
 import AdminShowcase from "./showcase/adminShowcase";
+import Team from "../services/Team";
+import AdminTeam from "./team/adminTeam";
 
 const Admin = () => {
   const [currentpage, setCurrentpage] = useState("");
@@ -32,6 +34,12 @@ const Admin = () => {
             >
               Edit Showcase
             </button>
+            <button
+              onClick={() => setCurrentpage("team")}
+              className="text-[10px] sm:text-[14px] border cursor-pointer border-slate-300 rounded-full px-4 py-2 font-normal text-white"
+            >
+              Edit Team
+            </button>
           </div>
         </div>
       </main>
@@ -42,10 +50,12 @@ const Admin = () => {
           <AdminNews />
         ) : currentpage === "showcase" ? (
           <AdminShowcase />
+        ) : currentpage === "team" ? (
+          <AdminTeam />
         ) : (
           <main className="flex-center w-full max-w-[1140px] h-screen">
             <p className="text-[20px] text-gray-500 font-normal">
-              Click on portfolio or news
+              Click on portfolio or news or showcase or team
             </p>
           </main>
         )}
