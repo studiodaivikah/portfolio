@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Footer from "@/components/footer/footer";
@@ -16,6 +15,7 @@ type NewsItem = {
 const NewsPage = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -33,12 +33,67 @@ const NewsPage = () => {
     fetchNews();
   }, []);
 
+  const handleShare = async (newsUrl: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      await navigator.clipboard.writeText(newsUrl);
+      setShowToast(true);
+
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = newsUrl;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
+      } catch (fallbackError) {
+        console.error("Fallback copy failed:", fallbackError);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+
   return (
     <section className="flex-center pt-24 w-full flex-col gap-y-6">
       <Navbar />
       <h1 className="text-center text-black font-extrabold py-8 md:py-14 text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
         NEWS
       </h1>
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-24 z-50 bg-black text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out">
+          <div className="flex items-center gap-2">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Link copied to clipboard!
+          </div>
+        </div>
+      )}
 
       {loading ? (
         <div className="flex justify-center items-center my-20">
@@ -52,7 +107,11 @@ const NewsPage = () => {
                 key={item.id}
                 className="group cursor-pointer transition-transform duration-300 hover:scale-105"
               >
-                <div className="relative overflow-hidden rounded-lg shadow-lg">
+                <a
+                  href={item.src}
+                  target="_blank"
+                  className="relative overflow-hidden rounded-lg shadow-lg"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.image}
@@ -60,7 +119,7 @@ const NewsPage = () => {
                     className="w-full h-64 md:h-72 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
-                </div>
+                </a>
                 <div className="mt-8 text-start max-w-[300px] flex-wrap">
                   <h3 className="text-[18px] md:text-base pl-6 font-semibold text-gray-800 group-hover:text-black transition-colors duration-200">
                     {item.title.toUpperCase()}
@@ -85,7 +144,10 @@ const NewsPage = () => {
                       })}
                     </p>
                   </div>
-                  <div className="flex-center gap-2">
+                  <div
+                    className="flex-center gap-2 cursor-pointer hover:opacity-70 transition-opacity duration-200"
+                    onClick={(e) => handleShare(item.src, e)}
+                  >
                     <Image
                       height={16}
                       width={16}
