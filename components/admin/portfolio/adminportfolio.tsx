@@ -23,6 +23,10 @@ const PortfolioManager: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ show: boolean; project: Project | null }>({
+    show: false,
+    project: null
+  });
   const [formData, setFormData] = useState<FormDataType>({
     type: "",
     title: "",
@@ -127,6 +131,24 @@ const PortfolioManager: React.FC = () => {
     }
   };
 
+  // Show delete confirmation
+  const showDeleteConfirmation = (project: Project) => {
+    setDeleteConfirm({ show: true, project });
+  };
+
+  // Handle confirmed delete
+  const handleConfirmDelete = async () => {
+    if (deleteConfirm.project) {
+      await deleteProject(deleteConfirm.project.id);
+      setDeleteConfirm({ show: false, project: null });
+    }
+  };
+
+  // Cancel delete
+  const handleCancelDelete = () => {
+    setDeleteConfirm({ show: false, project: null });
+  };
+
   // Handle form submit
   const handleSubmit = async () => {
     if (!formData.type || !formData.title || !formData.image) {
@@ -228,6 +250,35 @@ const PortfolioManager: React.FC = () => {
           Add Project
         </button>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {deleteConfirm.show && deleteConfirm.project && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Delete Project
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Are you sure you want to delete &quot;{deleteConfirm.project.title}&quot;? 
+              This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={handleCancelDelete}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {(showAddForm || editingProject) && (
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -363,7 +414,7 @@ const PortfolioManager: React.FC = () => {
                       <Edit size={16} />
                     </button>
                     <button
-                      onClick={() => deleteProject(project.id)}
+                      onClick={() => showDeleteConfirmation(project)}
                       className="text-red-600 cursor-pointer hover:text-red-800"
                     >
                       <Trash2 size={16} />

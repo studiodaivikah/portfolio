@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import PortfolioManager from "./portfolio/adminportfolio";
-import AdminNews from "./news/adminnews";
+import AdminNews from "./news/adminnews"
+import AdminShowcase from "./showcase/adminShowcase";
 
 const Admin = () => {
   const [currentpage, setCurrentpage] = useState("");
@@ -25,6 +26,12 @@ const Admin = () => {
             >
               Edit News
             </button>
+            <button
+              onClick={() => setCurrentpage("showcase")}
+              className="text-[10px] sm:text-[14px] border cursor-pointer border-slate-300 rounded-full px-4 py-2 font-normal text-white"
+            >
+              Edit Showcase
+            </button>
           </div>
         </div>
       </main>
@@ -33,6 +40,8 @@ const Admin = () => {
           <PortfolioManager />
         ) : currentpage === "news" ? (
           <AdminNews />
+        ) : currentpage === "showcase" ? (
+          <AdminShowcase />
         ) : (
           <main className="flex-center w-full max-w-[1140px] h-screen">
             <p className="text-[20px] text-gray-500 font-normal">

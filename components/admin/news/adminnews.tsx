@@ -26,6 +26,10 @@ const AdminNews: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ show: boolean; newsItem: NewsItem | null }>({
+    show: false,
+    newsItem: null
+  });
   const [formData, setFormData] = useState<FormDataType>({
     src: "",
     title: "",
@@ -113,6 +117,24 @@ const AdminNews: React.FC = () => {
     } catch (error) {
       console.error("Error deleting news:", error);
     }
+  };
+
+  // Show delete confirmation
+  const showDeleteConfirmation = (newsItem: NewsItem) => {
+    setDeleteConfirm({ show: true, newsItem });
+  };
+
+  // Handle confirmed delete
+  const handleConfirmDelete = async () => {
+    if (deleteConfirm.newsItem) {
+      await deleteNews(deleteConfirm.newsItem.id);
+      setDeleteConfirm({ show: false, newsItem: null });
+    }
+  };
+
+  // Cancel delete
+  const handleCancelDelete = () => {
+    setDeleteConfirm({ show: false, newsItem: null });
   };
 
   const handleSubmit = async () => {
@@ -207,6 +229,35 @@ const AdminNews: React.FC = () => {
           Add News
         </button>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {deleteConfirm.show && deleteConfirm.newsItem && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Delete News
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Are you sure you want to delete &quot;{deleteConfirm.newsItem.title}&quot;? 
+              This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={handleCancelDelete}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {(showAddForm || editingNews) && (
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -335,7 +386,7 @@ const AdminNews: React.FC = () => {
                       <Edit size={16} />
                     </button>
                     <button
-                      onClick={() => deleteNews(n.id)}
+                      onClick={() => showDeleteConfirmation(n)}
                       className="text-red-600 cursor-pointer hover:text-red-800"
                     >
                       <Trash2 size={16} />
