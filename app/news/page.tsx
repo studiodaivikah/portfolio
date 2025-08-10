@@ -99,7 +99,11 @@ const NewsPage = () => {
         <div className="flex justify-center items-center my-20">
           <div className="h-10 w-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
         </div>
-      ) : (
+      ) : news.length === 0 ? (
+          <div className="flex items-center justify-center h-64">
+            <p className="text-gray-500 text-lg">No items to display</p>
+          </div>
+        ) : (
         <div className="max-w-7xl w-full my-14 px-4 md:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-14 gap-6 w-full">
             {news.map((item) => (
