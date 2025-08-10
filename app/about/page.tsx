@@ -8,7 +8,7 @@ import Navbar from "@/components/nav/navbar";
 
 const page = () => {
   return (
-    <section className="w-full flex-col flex-center">
+    <section className="w-full pt-20 flex-col flex-center">
       <Navbar />
       <div className="w-full flex-center py-28">
         {/* eslint-disable-next-line @next/next/no-img-element */}

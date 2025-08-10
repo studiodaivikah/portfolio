@@ -63,9 +63,9 @@ const ContactForm = () => {
   }
 
   return (
-    <main className="flex-center flex-col max-w-[2800px] w-full">
+    <main className="flex-center flex-col pt-20 max-w-[2800px] w-full">
       <Navbar />
-      <div className="w-screen border h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
+      <div className="w-screen h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
         <Image
           fill
           alt="Contact Background"

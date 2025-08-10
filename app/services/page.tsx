@@ -147,7 +147,7 @@ const ServicesPage: React.FC = () => {
   };
 
   return (
-    <section className="w-full flex-center flex-col">
+    <section className="w-full pt-20 flex-center flex-col">
       <Navbar />
       <div className="w-full flex-center border-b border-b-black">
         {/* eslint-disable-next-line @next/next/no-img-element */}

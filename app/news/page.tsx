@@ -34,7 +34,7 @@ const NewsPage = () => {
   }, []);
 
   return (
-    <section className="flex-center w-full flex-col gap-y-6">
+    <section className="flex-center pt-24 w-full flex-col gap-y-6">
       <Navbar />
       <h1 className="text-center text-black font-extrabold py-8 md:py-14 text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
         NEWS

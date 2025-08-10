@@ -13,7 +13,7 @@ const navitems = [
 
 const Navbar = () => {
   return (
-    <section className="w-full h-[80px] z-50 bg-gray-950 flex-center mx-auto">
+    <section className="w-full h-[80px] top-0 fixed z-50 bg-gray-950 flex-center mx-auto">
       <div className="flex items-center justify-start mx-5 sm:mx-8 gap-6 lg:gap-0 lg:justify-between h-full max-w-[1140px] w-full">
         <Image
           className="block lg:hidden"

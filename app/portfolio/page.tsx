@@ -53,7 +53,7 @@ const Page = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center space-y-4">
+    <section className="w-full pt-20 flex flex-col items-center space-y-4">
       <Navbar />
       <h1 className="text-center text-black font-extrabold py-8 md:py-14 text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
         PORTFOLIO
