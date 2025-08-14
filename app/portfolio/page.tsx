@@ -12,6 +12,7 @@ const PortfolioButtons = [
   { id: 4, label: "VISUALIZATION" },
   { id: 5, label: "PROJECT MANAGEMENT" },
   { id: 6, label: "SUSTAINABILITY" },
+  { id: 7, label: "ONGOING" },
 ];
 
 type Project = {

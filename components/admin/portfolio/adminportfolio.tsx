@@ -23,9 +23,12 @@ const PortfolioManager: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [deleteConfirm, setDeleteConfirm] = useState<{ show: boolean; project: Project | null }>({
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    show: boolean;
+    project: Project | null;
+  }>({
     show: false,
-    project: null
+    project: null,
   });
   const [formData, setFormData] = useState<FormDataType>({
     type: "",
@@ -39,6 +42,7 @@ const PortfolioManager: React.FC = () => {
     "visualization",
     "project management",
     "sustainability",
+    "ongoing",
   ];
 
   // Load Cloudinary widget script
@@ -259,8 +263,8 @@ const PortfolioManager: React.FC = () => {
               Delete Project
             </h3>
             <p className="text-gray-600 mb-4">
-              Are you sure you want to delete &quot;{deleteConfirm.project.title}&quot;? 
-              This action cannot be undone.
+              Are you sure you want to delete &quot;
+              {deleteConfirm.project.title}&quot;? This action cannot be undone.
             </p>
             <div className="flex gap-3 justify-end">
               <button
