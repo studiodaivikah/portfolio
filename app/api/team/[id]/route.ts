@@ -5,16 +5,16 @@ export async function GET(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   
   try {
-    const image = await prisma.showcase.findUnique({ where: { id } });
-
-    if (!image) {
-      return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    const teamMember = await prisma.team.findUnique({ where: { id } });
+    
+    if (!teamMember) {
+      return NextResponse.json({ error: "Team member not found" }, { status: 404 });
     }
-
-    return NextResponse.json(image);
+    
+    return NextResponse.json(teamMember);
   } catch (error) {
     console.error("GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch team member" }, { status: 500 });
   }
 }
 
@@ -22,21 +22,21 @@ export async function PUT(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   
   try {
-    const { image } = await request.json();
-
+    const { image, name, role } = await request.json();
+    
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
-
-    const updatedImage = await prisma.team.update({
+    
+    const updatedTeamMember = await prisma.team.update({
       where: { id },
-      data: { image },
+      data: { image, name, role },
     });
-
-    return NextResponse.json(updatedImage);
+    
+    return NextResponse.json(updatedTeamMember);
   } catch (error) {
     console.error("PUT error:", error);
-    return NextResponse.json({ error: "Failed to update image" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to update team member" }, { status: 500 });
   }
 }
 
@@ -44,10 +44,10 @@ export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   
   try {
-    const deletedImage = await prisma.team.delete({ where: { id } });
-    return NextResponse.json(deletedImage);
+    const deletedTeamMember = await prisma.team.delete({ where: { id } });
+    return NextResponse.json(deletedTeamMember);
   } catch (error) {
     console.error("DELETE error:", error);
-    return NextResponse.json({ error: "Failed to delete image" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to delete team member" }, { status: 500 });
   }
 }
