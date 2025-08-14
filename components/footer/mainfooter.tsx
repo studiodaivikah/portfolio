@@ -149,12 +149,15 @@ const MainFooter = () => {
 
         {/* Map Section - Bottom right on large devices, last on mobile */}
         <div className="w-full mt-8 md:-mt-[200px] md:max-w-[500px] lg:max-w-[700px] md:ml-auto">
-          <div className="w-full h-[250px] md:h-[200px] rounded-lg overflow-hidden border border-gray-600">
+          <div className="w-full h-[250px] md:h-[200px] rounded-lg overflow-hidden border border-gray-800">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.8267661251655!2d80.1879085!3d13.0446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526f446a1c3187%3A0x2e7c8b4f3e7c8b4f!2sSurapet%20Main%20Rd%2C%20Puthagaram%2C%20Chennai%2C%20Tamil%20Nadu%20600099!5e0!3m2!1sen!2sin!4v1691234567890!5m2!1sen!2sin"
               width="100%"
               height="100%"
-              style={{ border: 0 }}
+              style={{
+                border: 0,
+                filter: "grayscale(100%) invert(92%) contrast(83%)",
+              }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="Studio Davikah Location"
