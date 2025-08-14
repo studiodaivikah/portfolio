@@ -13,6 +13,7 @@ const PortfolioButtons = [
   { id: 5, label: "PROJECT MANAGEMENT" },
   { id: 6, label: "SUSTAINABILITY" },
   { id: 7, label: "ONGOING" },
+  { id: 8, label: "COMPLETED" },
 ];
 
 type Project = {
@@ -61,7 +62,7 @@ const Page = () => {
       </h1>
 
       {/* Filter Buttons */}
-      <div className="flex flex-wrap justify-center px-4 items-center gap-2 md:gap-4 max-w-4xl w-full -mt-6">
+      <div className="flex flex-wrap justify-center px-4 items-center gap-2 md:gap-4 max-w-5xl w-full -mt-6">
         {PortfolioButtons.map((item) => (
           <button
             onClick={() => setItemName(item.label)}

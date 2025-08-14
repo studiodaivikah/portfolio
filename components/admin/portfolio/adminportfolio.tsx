@@ -43,6 +43,7 @@ const PortfolioManager: React.FC = () => {
     "project management",
     "sustainability",
     "ongoing",
+    "completed",
   ];
 
   // Load Cloudinary widget script
