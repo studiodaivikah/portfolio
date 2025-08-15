@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Upload, Plus, Edit, Trash2, Save, X } from "lucide-react";
+import { Upload, Plus, Edit, Trash2, Save, X, FileText, Eye, Image as ImageIcon } from "lucide-react";
 
 type Project = {
   id: string;
@@ -10,6 +10,16 @@ type Project = {
   title: string;
   image: string;
   createdAt: string;
+  blog?: BlogContent;
+};
+
+type BlogContent = {
+  id: string;
+  projectId: string;
+  paragraphs: string[];
+  images: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 type FormDataType = {
@@ -18,11 +28,17 @@ type FormDataType = {
   image: string;
 };
 
+type BlogFormData = {
+  paragraphs: string[];
+  images: string[];
+};
+
 const PortfolioManager: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [editingBlog, setEditingBlog] = useState<Project | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     show: boolean;
     project: Project | null;
@@ -34,6 +50,10 @@ const PortfolioManager: React.FC = () => {
     type: "",
     title: "",
     image: "",
+  });
+  const [blogFormData, setBlogFormData] = useState<BlogFormData>({
+    paragraphs: [""],
+    images: [],
   });
 
   const projectTypes = [
@@ -54,11 +74,11 @@ const PortfolioManager: React.FC = () => {
     document.body.appendChild(script);
   }, []);
 
-  // Fetch projects
+  // Fetch projects with blog content
   const fetchProjects = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/portfolio");
+      const response = await fetch("/api/portfolio?includeBlog=true");
       if (!response.ok) throw new Error("Failed to fetch projects");
       const data = await response.json();
       setProjects(data.projects || []);
@@ -122,6 +142,34 @@ const PortfolioManager: React.FC = () => {
     }
   };
 
+  // Create or update blog content
+  const saveBlogContent = async (projectId: string, blogData: BlogFormData) => {
+    try {
+      const response = await fetch(`/api/portfolio/${projectId}/blog`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(blogData),
+      });
+
+      if (!response.ok) throw new Error("Failed to save blog content");
+      const blogContent: BlogContent = await response.json();
+      
+      // Update the project in state with blog content
+      setProjects((prev) =>
+        prev.map((p) => 
+          p.id === projectId ? { ...p, blog: blogContent } : p
+        )
+      );
+      
+      return blogContent;
+    } catch (error) {
+      console.error("Error saving blog content:", error);
+      throw error;
+    }
+  };
+
   // Delete project
   const deleteProject = async (id: string) => {
     try {
@@ -178,9 +226,47 @@ const PortfolioManager: React.FC = () => {
       }
 
       setFormData({ type: "", title: "", image: "" });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       alert("Error saving project.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle blog submit
+  const handleBlogSubmit = async () => {
+    if (!editingBlog) return;
+    
+    // Filter out empty paragraphs
+    const filteredParagraphs = blogFormData.paragraphs.filter(p => p.trim() !== "");
+    
+    if (filteredParagraphs.length === 0) {
+      alert("Please add at least one paragraph");
+      return;
+    }
+
+    if (filteredParagraphs.length > 20) {
+      alert("Maximum 20 paragraphs allowed");
+      return;
+    }
+
+    if (blogFormData.images.length > 40) {
+      alert("Maximum 40 images allowed");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await saveBlogContent(editingBlog.id, {
+        paragraphs: filteredParagraphs,
+        images: blogFormData.images,
+      });
+      setEditingBlog(null);
+      setBlogFormData({ paragraphs: [""], images: [] });
+      alert("Blog content saved successfully!");
+    } catch (error) {
+      alert("Error saving blog content.");
     } finally {
       setIsLoading(false);
     }
@@ -196,11 +282,60 @@ const PortfolioManager: React.FC = () => {
     });
   };
 
+  // Start blog editing
+  const startBlogEdit = (project: Project) => {
+    setEditingBlog(project);
+    if (project.blog) {
+      setBlogFormData({
+        paragraphs: project.blog.paragraphs.length > 0 ? project.blog.paragraphs : [""],
+        images: project.blog.images || [],
+      });
+    } else {
+      setBlogFormData({ paragraphs: [""], images: [] });
+    }
+  };
+
   // Cancel editing
   const cancelEdit = () => {
     setEditingProject(null);
     setShowAddForm(false);
+    setEditingBlog(null);
     setFormData({ type: "", title: "", image: "" });
+    setBlogFormData({ paragraphs: [""], images: [] });
+  };
+
+  // Add paragraph
+  const addParagraph = () => {
+    if (blogFormData.paragraphs.length < 20) {
+      setBlogFormData(prev => ({
+        ...prev,
+        paragraphs: [...prev.paragraphs, ""]
+      }));
+    }
+  };
+
+  // Remove paragraph
+  const removeParagraph = (index: number) => {
+    setBlogFormData(prev => ({
+      ...prev,
+      paragraphs: prev.paragraphs.filter((_, i) => i !== index)
+    }));
+  };
+
+  // Update paragraph
+  const updateParagraph = (index: number, value: string) => {
+    setBlogFormData(prev => ({
+      ...prev,
+      paragraphs: prev.paragraphs.map((p, i) => i === index ? value : p)
+    }));
+  };
+
+  // Remove image
+  const removeImage = (index: number) => {
+    setBlogFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
   };
 
   // Define a minimal Cloudinary type for TypeScript
@@ -212,7 +347,7 @@ const PortfolioManager: React.FC = () => {
     ) => { open: () => void };
   };
 
-  const openCloudinaryWidget = () => {
+  const openCloudinaryWidget = (isForBlog = false) => {
     const cloudinary = (window as { cloudinary?: Cloudinary }).cloudinary;
     if (!cloudinary) return;
 
@@ -221,7 +356,7 @@ const PortfolioManager: React.FC = () => {
         cloudName: "dlwlrv6c4",
         uploadPreset: "mpd_db",
         sources: ["local", "url", "camera"],
-        multiple: false,
+        multiple: isForBlog,
         cropping: false,
         folder: "mpd",
         maxFileSize: 5000000,
@@ -230,10 +365,17 @@ const PortfolioManager: React.FC = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (error: unknown, result: any) => {
         if (!error && result.event === "success") {
-          setFormData((prev) => ({
-            ...prev,
-            image: result.info.secure_url,
-          }));
+          if (isForBlog) {
+            setBlogFormData(prev => ({
+              ...prev,
+              images: [...prev.images, result.info.secure_url]
+            }));
+          } else {
+            setFormData(prev => ({
+              ...prev,
+              image: result.info.secure_url,
+            }));
+          }
         }
       }
     );
@@ -285,7 +427,8 @@ const PortfolioManager: React.FC = () => {
         </div>
       )}
 
-      {(showAddForm || editingProject) && (
+      {/* Add/Edit Project Form */}
+      {(showAddForm || editingProject) && !editingBlog && (
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">
             {editingProject ? "Edit Project" : "Add New Project"}
@@ -299,7 +442,7 @@ const PortfolioManager: React.FC = () => {
               <select
                 value={formData.type}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, type: e.target.value }))
+                  setFormData(prev => ({ ...prev, type: e.target.value }))
                 }
                 className="w-full p-2 border border-gray-300 rounded-md"
               >
@@ -320,7 +463,7 @@ const PortfolioManager: React.FC = () => {
                 type="text"
                 value={formData.title}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, title: e.target.value }))
+                  setFormData(prev => ({ ...prev, title: e.target.value }))
                 }
                 className="w-full p-2 border border-gray-300 rounded-md"
                 placeholder="Enter Title"
@@ -334,7 +477,7 @@ const PortfolioManager: React.FC = () => {
 
               <button
                 type="button"
-                onClick={openCloudinaryWidget}
+                onClick={() => openCloudinaryWidget(false)}
                 className="bg-gray-100 border-2 border-dashed rounded-lg p-8 text-center w-full cursor-pointer hover:bg-gray-50"
               >
                 {formData.image ? (
@@ -381,6 +524,113 @@ const PortfolioManager: React.FC = () => {
         </div>
       )}
 
+      {/* Blog Editor */}
+      {editingBlog && (
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8 max-h-[80vh] overflow-y-auto">
+          <h2 className="text-xl font-semibold mb-4">
+            Edit Blog Content for &quot;{editingBlog.title}&quot;
+          </h2>
+
+          <div className="space-y-6">
+            {/* Paragraphs Section */}
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Paragraphs ({blogFormData.paragraphs.length}/20)
+                </label>
+                <button
+                  onClick={addParagraph}
+                  disabled={blogFormData.paragraphs.length >= 20}
+                  className="bg-blue-600 text-white px-3 py-1 text-sm rounded cursor-pointer hover:bg-blue-700 disabled:opacity-50"
+                >
+                  Add Paragraph
+                </button>
+              </div>
+              
+              <div className="space-y-3">
+                {blogFormData.paragraphs.map((paragraph, index) => (
+                  <div key={index} className="flex gap-2">
+                    <div className="flex-1">
+                      <textarea
+                        value={paragraph}
+                        onChange={(e) => updateParagraph(index, e.target.value)}
+                        placeholder={`Paragraph ${index + 1}...`}
+                        className="w-full p-2 border border-gray-300 rounded-md h-24 resize-none"
+                      />
+                    </div>
+                    {blogFormData.paragraphs.length > 1 && (
+                      <button
+                        onClick={() => removeParagraph(index)}
+                        className="text-red-600 hover:text-red-800 cursor-pointer"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Images Section */}
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Images ({blogFormData.images.length}/40)
+                </label>
+                <button
+                  onClick={() => openCloudinaryWidget(true)}
+                  disabled={blogFormData.images.length >= 40}
+                  className="bg-green-600 text-white px-3 py-1 text-sm rounded cursor-pointer hover:bg-green-700 disabled:opacity-50 flex items-center gap-1"
+                >
+                  <ImageIcon size={16} />
+                  Add Images
+                </button>
+              </div>
+
+              {blogFormData.images.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {blogFormData.images.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image}
+                        alt={`Blog image ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 cursor-pointer"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-2 pt-4 border-t">
+              <button
+                onClick={handleBlogSubmit}
+                disabled={isLoading}
+                className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 disabled:opacity-50"
+              >
+                <Save size={20} />
+                {isLoading ? "Saving..." : "Save Blog"}
+              </button>
+
+              <button
+                onClick={cancelEdit}
+                className="bg-gray-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2"
+              >
+                <X size={20} />
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Projects Grid */}
       <div className="grid grid-cols-1 mt-16 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <div className="col-span-full text-center py-8">
@@ -415,12 +665,28 @@ const PortfolioManager: React.FC = () => {
                     <button
                       onClick={() => startEdit(project)}
                       className="text-blue-600 cursor-pointer hover:text-blue-800"
+                      title="Edit Project"
                     >
                       <Edit size={16} />
                     </button>
                     <button
+                      onClick={() => startBlogEdit(project)}
+                      className="text-green-600 cursor-pointer hover:text-green-800"
+                      title="Edit Blog Content"
+                    >
+                      <FileText size={16} />
+                    </button>
+                    <button
+                      onClick={() => window.open(`/portfolio/${project.id}`, '_blank')}
+                      className="text-purple-600 cursor-pointer hover:text-purple-800"
+                      title="Preview Project"
+                    >
+                      <Eye size={16} />
+                    </button>
+                    <button
                       onClick={() => showDeleteConfirmation(project)}
                       className="text-red-600 cursor-pointer hover:text-red-800"
+                      title="Delete Project"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -429,9 +695,16 @@ const PortfolioManager: React.FC = () => {
                 <h3 className="font-semibold text-gray-900 mb-2">
                   {project.title}
                 </h3>
-                <p className="text-xs text-gray-500">
-                  Created: {new Date(project.createdAt).toLocaleDateString()}
-                </p>
+                <div className="flex justify-between items-center">
+                  <p className="text-xs text-gray-500">
+                    Created: {new Date(project.createdAt).toLocaleDateString()}
+                  </p>
+                  {project.blog && (
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                      Has Blog
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           ))

@@ -4,6 +4,7 @@
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/nav/navbar";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const PortfolioButtons = [
   { id: 1, label: "ALL" },
@@ -21,18 +22,25 @@ type Project = {
   type: string;
   title: string;
   image: string;
+  createdAt: string;
+  blog?: {
+    id: string;
+    paragraphs: string[];
+    images: string[];
+  };
 };
 
 const Page = () => {
   const [itemName, setItemName] = useState("ALL");
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   // Fetch all projects once
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("/api/portfolio");
+        const res = await fetch("/api/portfolio?includeBlog=true");
         const data = await res.json();
         console.log(data);
         setAllProjects(data.projects || []);
@@ -52,6 +60,11 @@ const Page = () => {
     return allProjects.filter(
       (project) => project.type.toLowerCase() === itemName.toLowerCase()
     );
+  };
+
+  // Handle project click
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/portfolio/${projectId}`);
   };
 
   return (
@@ -94,6 +107,7 @@ const Page = () => {
             {getFilteredProjects().map((item) => (
               <div
                 key={item.id}
+                onClick={() => handleProjectClick(item.id)}
                 className="group cursor-pointer transition-transform duration-300 hover:scale-105"
               >
                 <div className="relative overflow-hidden rounded-lg shadow-lg">
@@ -102,12 +116,38 @@ const Page = () => {
                     alt={item.title}
                     className="w-full h-64 md:h-72 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+                  {/* <div className="absolute inset-0 group-hover:bg-opacity-20 transition-opacity duration-300">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg">
+                        <p className="text-black font-semibold text-sm">
+                          View Details
+                        </p>
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* Blog indicator */}
+                  {/* {item.blog && item.blog.paragraphs.length > 0 && (
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                        Blog
+                      </div>
+                    </div>
+                  )} */}
                 </div>
+
                 <div className="mt-3 text-start ml-6 max-w-[300px] flex-wrap w-full">
                   <h3 className="text-[18px] md:text-base font-semibold text-gray-800 group-hover:text-black transition-colors duration-200">
                     {item.title.toUpperCase()}
                   </h3>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+                      {item.type.toUpperCase()}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {new Date(item.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
