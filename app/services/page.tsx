@@ -248,7 +248,7 @@ const ServicesPage: React.FC = () => {
           <div className="flex flex-col items-start max-w-[500px] w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/ser_pic_2.jpg"
+              src="/images/ser_pic_3.jpg"
               alt="Design Excellence"
               className="h-[400px] w-full object-cover rounded-lg"
             />
