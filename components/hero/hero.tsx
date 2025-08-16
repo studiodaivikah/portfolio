@@ -19,7 +19,7 @@ const Hero = () => {
         Here, each design tells a unique story — of people, place, purpose, and
         possibility.&quot;
       </h3>
-      <div className="flex justify-between flex-row items-center mt-20 gap-6 w-full">
+      <div className="flex justify-between flex-col sm:flex-row items-center mt-6 sm:-mt-2 md:mt-20 gap-6 w-full">
         <div>
           <button className="text-white font-normal text-[16px] border border-white py-3 px-10">
             Explore Us
