@@ -60,3 +60,30 @@ model Blog {
   
   @@map("blogs")
 }
+
+model Project2 {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relation to blog2 content
+  blog2      Blog2?
+  
+  @@map("projects2")
+}
+
+model Blog2 {
+  id         String   @id @default(cuid())
+  projectId  String   @unique
+  paragraphs String[] // Array of paragraph text
+  images     String[] // Array of image URLs
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relation to project2
+  project2    Project2  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@map("blogs2")
+}

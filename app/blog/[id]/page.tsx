@@ -40,7 +40,7 @@ const ProjectDetailPage = () => {
         setLoading(true);
 
         // Fetch project details
-        const projectRes = await fetch(`/api/portfolio/${params.id}`);
+        const projectRes = await fetch(`/api/blog/${params.id}`);
         if (!projectRes.ok) {
           throw new Error("Project not found");
         }
@@ -49,7 +49,7 @@ const ProjectDetailPage = () => {
 
         // Fetch blog content
         try {
-          const blogRes = await fetch(`/api/portfolio/${params.id}/blog`);
+          const blogRes = await fetch(`/api/blog/${params.id}/blog`);
           if (blogRes.ok) {
             const blogData = await blogRes.json();
             setBlog(blogData);
@@ -91,10 +91,10 @@ const ProjectDetailPage = () => {
             {error || "The project you're looking for doesn't exist."}
           </p>
           <button
-            onClick={() => router.push("/portfolio")}
+            onClick={() => router.push("/blog")}
             className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors"
           >
-            Back to Portfolio
+            Back to Blog
           </button>
         </div>
       </div>
@@ -104,7 +104,7 @@ const ProjectDetailPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen w-screen flex flex-col justify-between bg-white overflow-x-hidden">
+      <div className="min-h-screen w-screen flex-col justify-between flex bg-white overflow-x-hidden">
         {/* Hero Section */}
         <div className="pt-20">
           {/* Back Button */}
@@ -114,7 +114,7 @@ const ProjectDetailPage = () => {
               className="flex cursor-pointer items-center gap-2 text-gray-600 hover:text-black transition-colors mb-6"
             >
               <ArrowLeft size={20} />
-              Back to Portfolio
+              Back to Blog
             </button>
           </div>
 
@@ -217,7 +217,7 @@ const RelatedProjects = ({
   useEffect(() => {
     const fetchRelatedProjects = async () => {
       try {
-        const response = await fetch("/api/portfolio");
+        const response = await fetch("/api/blog");
         if (response.ok) {
           const data = await response.json();
           const filtered = data.projects
@@ -249,7 +249,7 @@ const RelatedProjects = ({
           {relatedProjects.map((project) => (
             <div
               key={project.id}
-              onClick={() => router.push(`/portfolio/${project.id}`)}
+              onClick={() => router.push(`/blog/${project.id}`)}
               className="group cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full"
             >
               <div className="relative overflow-hidden w-full">

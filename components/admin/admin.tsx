@@ -3,8 +3,8 @@ import { useState } from "react";
 import PortfolioManager from "./portfolio/adminportfolio";
 import AdminNews from "./news/adminnews";
 import AdminShowcase from "./showcase/adminShowcase";
-import Team from "../services/Team";
 import AdminTeam from "./team/adminTeam";
+import AdminBlog from "./blog/adminblog";
 
 const Admin = () => {
   const [currentpage, setCurrentpage] = useState("");
@@ -40,6 +40,12 @@ const Admin = () => {
             >
               Edit Team
             </button>
+            <button
+              onClick={() => setCurrentpage("blog")}
+              className="text-[10px] sm:text-[14px] border cursor-pointer border-slate-300 rounded-full px-4 py-2 font-normal text-white"
+            >
+              Edit Blog
+            </button>
           </div>
         </div>
       </main>
@@ -52,6 +58,8 @@ const Admin = () => {
           <AdminShowcase />
         ) : currentpage === "team" ? (
           <AdminTeam />
+        ) : currentpage === "blog" ? (
+          <AdminBlog />
         ) : (
           <main className="flex-center w-full max-w-[1140px] h-screen">
             <p className="text-[20px] text-gray-500 font-normal">
