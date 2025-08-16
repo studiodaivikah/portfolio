@@ -20,6 +20,12 @@ const FooterImageItems = [
     href: "https://wa.me/917550237036?text=Hello%20Studio%20Daivikah",
     src: "/icons/whatsapp_filled.svg",
   },
+    {
+    key: 4,
+    label: "Facebook",
+    href: "https://www.facebook.com/share/15spjwC4w9/?mibextid=wwXIfr",
+    src: "/icons/facebook_filled.svg",
+  },
 ];
 
 const SocialLinks = () => {

@@ -102,6 +102,19 @@ const Navbar = () => {
                 src="/icons/whatsapp.svg"
               />
             </a>
+            <a
+              href="https://www.facebook.com/share/15spjwC4w9/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+            >
+              <Image
+                height={24}
+                width={24}
+                alt="facebook"
+                src="/icons/facebook.svg"
+              />
+            </a>
           </div>
         </div>
       </section>

@@ -10,7 +10,7 @@ const Hero = () => {
       <h2 className="text-white text-[36px] xs:text-[40px] sm:text-[52px] md:text-[60px] font-extrabold leading-12 sm:leading-16">
         DESIGNING SPACES THAT, <br />
         INSPIRE ENDURE, <br />
-         AND SHAPE TOMORROW
+        AND SHAPE TOMORROW
       </h2>
       <h3 className="text-white text-[20px] font-normal max-w-[760px] leading-7 w-full text-wrap">
         &quot;Welcome to the world of architecture — where imagination takes
@@ -67,6 +67,19 @@ const Hero = () => {
                 width={16}
                 alt="whatsapp"
                 src={"/icons/whatsapp_filled.svg"}
+              />
+            </a>
+            <a
+              href="https://www.facebook.com/share/15spjwC4w9/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white p-1.5 rounded-full"
+            >
+              <Image
+                height={16}
+                width={16}
+                alt="facebook"
+                src={"/icons/facebook_filled.svg"}
               />
             </a>
           </div>
