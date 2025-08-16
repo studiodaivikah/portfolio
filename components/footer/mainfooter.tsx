@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const f1_items = [
   { id: 1, label: "Linkedin", href: "/" },
@@ -36,7 +37,7 @@ const MainFooter = () => {
     <section className="flex items-center flex-col gap-3 bg-black w-full py-20">
       <div className="max-w-[1100px] w-full bg-black flex flex-col gap-3 items-center px-10">
         <div className="flex items-start flex-col sm:flex-row justify-start sm:items-center sm:justify-between w-full gap-4">
-          <p className="text-white font-bold text-[24px]">LOGO</p>
+          <Image src={"/images/logo.png"} height={70} width={70} alt="logo"/>
           <div className="flex-between w-full max-w-[240px] sm:max-w-[300px]">
             {f1_items.map((items) => (
               <Link

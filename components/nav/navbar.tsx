@@ -44,7 +44,7 @@ const Navbar = () => {
           </button>
 
           {/* Logo */}
-          <p className="text-white font-semibold text-lg">LOGO</p>
+          <Image src={"/images/logo.png"} height={70} width={70} alt="logo"/>
 
           {/* Desktop Navigation */}
           <nav className="lg:flex gap-6 hidden">
