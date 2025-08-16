@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="absolute flex items-start px-5 sm:px-8 justify-start flex-col top-28 gap-y-10 lg:justify-between h-auto max-w-[1200px] w-full">
+    <section className="absolute flex items-start px-5 sm:px-8 justify-start flex-col top-28 gap-y-[96px] lg:justify-between h-auto max-w-[1200px] w-full">
       {/* <h1 className="text-[20px] text-gray-300 -mb-6 font-normal">
         STRUCTURAL ART
       </h1> */}
@@ -19,7 +19,7 @@ const Hero = () => {
         Here, each design tells a unique story — of people, place, purpose, and
         possibility.&quot;
       </h3>
-      <div className="flex justify-between flex-col gap-6 w-full">
+      <div className="flex justify-between flex-row items-center mt-20 gap-6 w-full">
         <div>
           <button className="text-white font-normal text-[16px] border border-white py-3 px-10">
             Explore Us
