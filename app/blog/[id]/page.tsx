@@ -121,11 +121,10 @@ const ProjectDetailPage = () => {
           {/* Project Header */}
           <div className="w-full flex justify-center items-center px-4 md:px-10">
             <h1 className="text-[30px] md:text-[50px] lg:text-[60px] font-bold text-center break-words max-w-full">
-              {project.title.toUpperCase()}
+              {project.title && project.title.toUpperCase()}
             </h1>
           </div>
         </div>
-
         {/* Blog Content */}
         {blog && blog.paragraphs && blog.paragraphs.length > 0 && (
           <div className="w-full max-w-6xl mx-auto px-4 md:px-10 py-12">
@@ -190,96 +189,94 @@ const ProjectDetailPage = () => {
             )}
           </div>
         )}
-
         {/* Related Projects Section */}
-        <RelatedProjects
+        {/* <RelatedProjects
           currentProjectId={project.id}
           projectType={project.type}
-        />
-
+        /> */}
         <Footer />
       </div>
     </>
   );
 };
 
-// Related Projects Component
-const RelatedProjects = ({
-  currentProjectId,
-  projectType,
-}: {
-  currentProjectId: string;
-  projectType: string;
-}) => {
-  const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchRelatedProjects = async () => {
-      try {
-        const response = await fetch("/api/blog");
-        if (response.ok) {
-          const data = await response.json();
-          const filtered = data.projects
-            .filter(
-              (p: Project) =>
-                p.id !== currentProjectId && p.type === projectType
-            )
-            .slice(0, 3);
-          setRelatedProjects(filtered);
-        }
-      } catch (error) {
-        console.error("Error fetching related projects:", error);
-      }
-    };
-
-    fetchRelatedProjects();
-  }, [currentProjectId, projectType]);
-
-  if (relatedProjects.length === 0) return null;
-
-  return (
-    <div className="bg-gray-50 py-16 w-full">
-      <div className="max-w-7xl mx-auto px-4 md:px-10">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-12 break-words">
-          Related Projects
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-          {relatedProjects.map((project) => (
-            <div
-              key={project.id}
-              onClick={() => router.push(`/blog/${project.id}`)}
-              className="group cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full"
-            >
-              <div className="relative overflow-hidden w-full">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full max-w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300" />
-              </div>
-
-              <div className="p-6 w-full">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">
-                    {project.type.toUpperCase()}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-black transition-colors break-words">
-                  {project.title.toUpperCase()}
-                </h3>
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(project.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export default ProjectDetailPage;
+
+// Related Projects Component
+// const RelatedProjects = ({
+//   currentProjectId,
+//   projectType,
+// }: {
+//   currentProjectId: string;
+//   projectType: string;
+// }) => {
+//   const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     const fetchRelatedProjects = async () => {
+//       try {
+//         const response = await fetch("/api/blog");
+//         if (response.ok) {
+//           const data = await response.json();
+//           const filtered = data.projects
+//             .filter(
+//               (p: Project) =>
+//                 p.id !== currentProjectId && p.type === projectType
+//             )
+//             .slice(0, 3);
+//           setRelatedProjects(filtered);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching related projects:", error);
+//       }
+//     };
+
+//     fetchRelatedProjects();
+//   }, [currentProjectId, projectType]);
+
+//   if (relatedProjects.length === 0) return null;
+
+//   return (
+//     <div className="bg-gray-50 py-16 w-full">
+//       <div className="max-w-7xl mx-auto px-4 md:px-10">
+//         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12 break-words">
+//           Related Projects
+//         </h2>
+
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+//           {relatedProjects.map((project) => (
+//             <div
+//               key={project.id}
+//               onClick={() => router.push(`/blog/${project.id}`)}
+//               className="group cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full"
+//             >
+//               <div className="relative overflow-hidden w-full">
+//                 <img
+//                   src={project.image}
+//                   alt={project.title}
+//                   className="w-full max-w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+//                 />
+//                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300" />
+//               </div>
+
+//               <div className="p-6 w-full">
+//                 <div className="flex items-center gap-2 mb-2">
+//                   <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">
+//                     {project.type && project.type.toUpperCase()}
+//                   </span>
+//                 </div>
+//                 <h3 className="text-lg font-semibold text-gray-900 group-hover:text-black transition-colors break-words">
+//                   {project.title && project.title.toUpperCase()}
+//                 </h3>
+//                 <p className="text-sm text-gray-500 mt-2">
+//                   {new Date(project.createdAt).toLocaleDateString()}
+//                 </p>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
