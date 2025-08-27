@@ -92,7 +92,7 @@ const ProjectDetailPage = () => {
           </p>
           <button
             onClick={() => router.push("/portfolio")}
-            className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+            className="bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition-colors"
           >
             Back to Portfolio
           </button>
@@ -104,11 +104,11 @@ const ProjectDetailPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen w-screen flex flex-col justify-between bg-white overflow-x-hidden">
+      <div className="min-h-screen w-full max-w-[1140px] px-5 sm:px-8 xl:px-0 flex flex-col justify-between bg-white overflow-x-hidden">
         {/* Hero Section */}
         <div className="pt-20">
           {/* Back Button */}
-          <div className="max-w-7xl mx-auto px-4 md:px-10 py-6">
+          <div className="max-w-7xl mx-auto py-6">
             <button
               onClick={() => router.back()}
               className="flex cursor-pointer items-center gap-2 text-gray-600 hover:text-black transition-colors mb-6"
@@ -119,7 +119,7 @@ const ProjectDetailPage = () => {
           </div>
 
           {/* Project Header */}
-          <div className="w-full flex justify-center items-center px-4 md:px-10">
+          <div className="w-full flex justify-center items-center px-5 sm:px-8 xl:px-0">
             <h1 className="text-[30px] md:text-[50px] lg:text-[60px] font-bold text-center break-words max-w-full">
               {project.title && project.title.toUpperCase()}
             </h1>
@@ -128,7 +128,7 @@ const ProjectDetailPage = () => {
 
         {/* Blog Content */}
         {blog && blog.paragraphs && blog.paragraphs.length > 0 && (
-          <div className="w-full max-w-6xl mx-auto px-4 md:px-10 py-12">
+          <div className="w-full max-w-6xl mx-auto py-12">
             <div className="prose prose-lg max-w-none">
               {blog.paragraphs.map((paragraph, index) => {
                 // Insert images at strategic points

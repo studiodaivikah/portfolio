@@ -101,14 +101,20 @@ const ProjectDetailPage = () => {
     );
   }
 
+  // Get first paragraph as subtitle and remaining paragraphs
+  const subtitle = blog?.paragraphs?.[0] || "";
+  const remainingParagraphs = blog?.paragraphs?.slice(1) || [];
+  const firstImage = blog?.images?.[0] || "";
+  const remainingImages = blog?.images?.slice(1) || [];
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen w-screen flex-col justify-between flex bg-white overflow-x-hidden">
+      <div className="min-h-screen w-full max-w-[1140px] flex-col justify-between flex bg-white overflow-x-hidden">
         {/* Hero Section */}
         <div className="pt-20">
           {/* Back Button */}
-          <div className="max-w-7xl mx-auto px-4 md:px-10 py-6">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 xl:px-0 py-6">
             <button
               onClick={() => router.back()}
               className="flex cursor-pointer items-center gap-2 text-gray-600 hover:text-black transition-colors mb-6"
@@ -118,82 +124,80 @@ const ProjectDetailPage = () => {
             </button>
           </div>
 
-          {/* Project Header */}
-          <div className="w-full flex justify-center items-center px-4 md:px-10">
-            <h1 className="text-[30px] md:text-[50px] lg:text-[60px] font-bold text-center break-words max-w-full">
-              {project.title && project.title.toUpperCase()}
-            </h1>
+          {/* Project Header with Left Column Layout */}
+          <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 xl:px-0 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              {/* Left Column - Title, Subtitle, and First Image */}
+              <div className="space-y-6">
+                {/* Project Title */}
+                <h1 className="text-[30px] md:text-[40px] lg:text-[50px] font-bold break-words leading-tight">
+                  {project.title && project.title.toUpperCase()}
+                </h1>
+
+                {/* Subtitle (First Paragraph) */}
+                {subtitle && (
+                  <div className="text-gray-600 text-lg md:text-xl leading-relaxed font-medium">
+                    {subtitle.split("\n").map((line, index) => (
+                      <p key={index} className="mb-2">
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {/* First Image */}
+                {firstImage && (
+                  <div className="max-w-[400px] w-full">
+                    <img
+                      src={firstImage}
+                      alt="Project hero image"
+                      className="w-full h-auto rounded-lg shadow-lg object-cover max-h-96"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column - Spacer or additional content can go here */}
+              <div className="hidden lg:block"></div>
+            </div>
           </div>
         </div>
-        {/* Blog Content */}
-        {blog && blog.paragraphs && blog.paragraphs.length > 0 && (
-          <div className="w-full max-w-6xl mx-auto px-4 md:px-10 py-12">
+
+        {/* Blog Content - Remaining Paragraphs */}
+        {remainingParagraphs.length > 0 && (
+          <div className="w-full max-w-6xl mx-auto px-5 sm:px-8 xl:px-0 py-12">
             <div className="prose prose-lg max-w-none">
-              {blog.paragraphs.map((paragraph, index) => {
-                // Insert images at strategic points
-                // const shouldShowImage =
-                //   blog.images &&
-                //   blog.images.length > 0 &&
-                //   index > 0 &&
-                //   (index + 1) %
-                //     Math.ceil(
-                //       blog.paragraphs.length / Math.min(blog.images.length, 8)
-                //     ) ===
-                //     0;
-
-                // const imageIndex = Math.floor(
-                //   (index * blog.images.length) / blog.paragraphs.length
-                // );
-
-                return (
-                  <div key={index} className="mb-8 w-full">
-                    <p className="text-gray-700 text-sm sm:text-lg leading-relaxed mb-6 break-words">
-                      {paragraph}
-                    </p>
-
-                    {/* {shouldShowImage && blog.images[imageIndex] && (
-                      <div className="my-12 w-full">
-                        <img
-                          src={blog.images[imageIndex]}
-                          alt={`Project image ${imageIndex + 1}`}
-                          className="w-full max-w-full h-auto rounded-lg shadow-lg object-cover max-h-96"
-                        />
-                      </div>
-                    )} */}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Remaining Images Gallery */}
-            {blog.images && blog.images.length > 0 && (
-              <div className="mt-16 w-full">
-                {/* <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-                Project Gallery
-              </h2> */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                  {blog.images.map((image, index) => (
-                    <div key={index} className="group cursor-pointer w-full">
-                      <div className="relative overflow-hidden rounded-lg shadow-lg w-full">
-                        <img
-                          src={image}
-                          alt={`Gallery image ${index + 1}`}
-                          className="w-full max-w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 group-hover:bg-opacity-10 transition-opacity duration-300" />
-                      </div>
-                    </div>
-                  ))}
+              {remainingParagraphs.map((paragraph, index) => (
+                <div key={index + 1} className="mb-8 w-full">
+                  <p className="text-gray-700 text-sm sm:text-lg leading-relaxed mb-6 break-words">
+                    {paragraph}
+                  </p>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         )}
-        {/* Related Projects Section */}
-        {/* <RelatedProjects
-          currentProjectId={project.id}
-          projectType={project.type}
-        /> */}
+
+        {/* Remaining Images Gallery */}
+        {remainingImages.length > 0 && (
+          <div className="w-full max-w-6xl mx-auto px-5 sm:px-8 xl:px-0 mt-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+              {remainingImages.map((image, index) => (
+                <div key={index + 1} className="group cursor-pointer w-full">
+                  <div className="relative overflow-hidden rounded-lg shadow-lg w-full">
+                    <img
+                      src={image}
+                      alt={`Gallery image ${index + 2}`}
+                      className="w-full max-w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 group-hover:bg-opacity-10 transition-opacity duration-300" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <Footer />
       </div>
     </>
