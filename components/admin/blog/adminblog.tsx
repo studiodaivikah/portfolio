@@ -61,7 +61,7 @@ const AdminBlog: React.FC = () => {
   const [blogFormData, setBlogFormData] = useState<BlogFormData>({
     paragraphs: [""],
     images: [],
-  })
+  });
 
   // Load Cloudinary widget script
   useEffect(() => {
@@ -390,7 +390,7 @@ const AdminBlog: React.FC = () => {
           className="bg-blue-600 cursor-pointer text-white px-4 py-2 text-[12px] sm:text-[16px] rounded-lg hover:bg-blue-700 flex items-center gap-2"
         >
           <Plus size={20} />
-          Add Project
+          Add Blog
         </button>
       </div>
 
@@ -677,11 +677,11 @@ const AdminBlog: React.FC = () => {
                   <p className="text-xs text-gray-500">
                     Created: {new Date(project.createdAt).toLocaleDateString()}
                   </p>
-                  {/* {project.blog && (
+                  {project.blog && (
                     <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
                       Has Blog
                     </span>
-                  )} */}
+                  )}
                 </div>
               </div>
             </div>
