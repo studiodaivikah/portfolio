@@ -75,11 +75,11 @@ const ContactForm = () => {
         <div className="relative z-10 flex -top-64 sm:-top-64 md:-top-72 lg:-top-[360px] 2xl:-top-[520px] items-center justify-center h-full">
           <p className="max-w-[1240px] px-10 text-center text-[16px] sm:text-[20px] md:text-[28px] font-medium text-gray-700 rounded-lg p-6">
             Have a project in mind? A question, idea, or simply want to start a
-            conversation? We’d love to hear from you. Whether you&lsquo;re
+            conversation? We&lsquo;d love to hear from you. Whether you&lsquo;re
             looking to collaborate, request a consultation, or just learn more
             about what we do, reach out using the form below or connect with us
             directly. We believe the best designs begin with a simple
-            conversation—let’s start one today.
+            conversation—let&lsquo;s start one today.
           </p>
         </div>
       </div>
@@ -92,8 +92,8 @@ const ContactForm = () => {
                 LET&apos;S TALK
               </p>
               <p className="text-[26px] mt-2 text-gray-700">
-                &quot;From repairs to renovations, we’re here for you. Contact
-                Studio Daivaikah!
+                &quot;From repairs to renovations, we&lsquo;re here for you. Contact
+                Studio daivikah!&quot;
               </p>
             </div>
             <div className="flex-start max-w-[286px] flex-col">
@@ -101,7 +101,7 @@ const ContactForm = () => {
                 Call Us
               </p>
               <Link
-                href={`https://wa.me/919344217163?text=Hello Revawe Technologies`}
+                href={`https://wa.me/919344217163?text=Hello Studio daivikah`}
                 className="flex-center mt-2 "
               >
                 <p className="body-regular lg:paragraph-regular text-gray-700">
