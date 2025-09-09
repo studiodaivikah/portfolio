@@ -353,10 +353,10 @@ const PortfolioManager: React.FC = () => {
 
     const widget = cloudinary.createUploadWidget(
       {
-        cloudName: "dlwlrv6c4",
-        uploadPreset: "mpd_db",
+        cloudName: "dbe4dwnzf",
+        uploadPreset: "mpd_portfolio",
         sources: ["local", "url", "camera"],
-        multiple: isForBlog,
+        multiple: false,
         cropping: false,
         folder: "mpd",
         maxFileSize: 5000000,
