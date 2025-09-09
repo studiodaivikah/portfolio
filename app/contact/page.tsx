@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import SocialLinks from "../../components/ui/sociallinks";
 import Link from "next/link";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
@@ -64,6 +64,7 @@ const ContactForm = () => {
 
   return (
     <main className="flex-center flex-col pt-20 max-w-[2800px] w-full">
+      <Toaster position="bottom-center"/>
       <Navbar />
       <div className="w-screen h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
         <Image
