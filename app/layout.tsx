@@ -10,6 +10,22 @@ const jost = Jost({
 export const metadata: Metadata = {
   title: "Studio Daivikah",
   description: "Studio Daivikah Portfolio",
+  openGraph: {
+    title: "Studio Daivikah",
+    description: "Studio Daivikah Portfolio",
+    url: "https://studiodaivikah.com",
+    siteName: "Studio Daivikah",
+    images: [
+      {
+        url: "https://studiodaivikah.com/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Studio Daivikah Portfolio Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
