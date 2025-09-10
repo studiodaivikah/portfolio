@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "Studio Daivikah",
     images: [
       {
-        url: "/preview.png", // Change to relative path
+        url: "https://studiodaivikah.com/preview.png",
         width: 1200,
         height: 630,
         alt: "Studio Daivikah Portfolio Preview",
