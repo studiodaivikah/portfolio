@@ -10,6 +10,7 @@ const jost = Jost({
 export const metadata: Metadata = {
   title: "Studio Daivikah",
   description: "Studio Daivikah Portfolio",
+  metadataBase: new URL('https://studiodaivikah.com'),
   openGraph: {
     title: "Studio Daivikah",
     description: "Studio Daivikah Portfolio",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "Studio Daivikah",
     images: [
       {
-        url: "https://studiodaivikah.com/preview.png",
+        url: "/preview.png", // Change to relative path
         width: 1200,
         height: 630,
         alt: "Studio Daivikah Portfolio Preview",
