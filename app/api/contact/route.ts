@@ -108,7 +108,7 @@ export async function POST(req: Request) {
 
   const mailOptionsStudio = {
     from: '"Studio daivikah" <process.env.EMAIL>',
-    to: email,
+    to: process.env.EMAIL,
     subject: "Studio daivikah Inquiry",
     html: `
         <!DOCTYPE html>
