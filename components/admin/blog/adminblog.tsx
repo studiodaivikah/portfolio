@@ -19,7 +19,7 @@ type Project = {
   title: string;
   image: string;
   createdAt: string;
-  blog?: BlogContent;
+  blog2?: BlogContent;
 };
 
 type BlogContent = {
@@ -155,7 +155,7 @@ const AdminBlog: React.FC = () => {
 
       // Update the project in state with blog content
       setProjects((prev) =>
-        prev.map((p) => (p.id === projectId ? { ...p, blog: blogContent } : p))
+        prev.map((p) => (p.id === projectId ? { ...p, blog2: blogContent } : p))
       );
 
       return blogContent;
@@ -280,11 +280,11 @@ const AdminBlog: React.FC = () => {
   // Start blog editing
   const startBlogEdit = (project: Project) => {
     setEditingBlog(project);
-    if (project.blog) {
+    if (project.blog2) {
       setBlogFormData({
         paragraphs:
-          project.blog.paragraphs.length > 0 ? project.blog.paragraphs : [""],
-        images: project.blog.images || [],
+          project.blog2.paragraphs.length > 0 ? project.blog2.paragraphs : [""],
+        images: project.blog2.images || [],
       });
     } else {
       setBlogFormData({ paragraphs: [""], images: [] });
@@ -677,7 +677,7 @@ const AdminBlog: React.FC = () => {
                   <p className="text-xs text-gray-500">
                     Created: {new Date(project.createdAt).toLocaleDateString()}
                   </p>
-                  {project.blog && (
+                  {project.blog2 && (
                     <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
                       Has Blog
                     </span>
