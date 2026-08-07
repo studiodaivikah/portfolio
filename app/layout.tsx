@@ -60,10 +60,17 @@ export const metadata: Metadata = {
     siteName: "Studio Daivikah",
     images: [
       {
-        url: "/images/preview.png",
+        url: "https://studiodaivikah.com/images/og-share.png",
         width: 1200,
         height: 630,
-        alt: "Studio Daivikah Architecture Showcase",
+        alt: "Studio Daivikah Architecture Logo Preview",
+        type: "image/png",
+      },
+      {
+        url: "https://studiodaivikah.com/images/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Studio Daivikah Logo Preview",
         type: "image/png",
       },
     ],
@@ -75,10 +82,14 @@ export const metadata: Metadata = {
     title: "Studio Daivikah | Architecture & Interior Design Studio",
     description:
       "Concept to Creation — Studio Daivikah delivers innovative architectural, interior, and 3D visualization design services.",
-    images: ["/images/preview.png"],
+    images: ["https://studiodaivikah.com/images/og-share.png"],
   },
   other: {
-    "og:image:secure_url": "https://studiodaivikah.com/images/preview.png",
+    "og:image": "https://studiodaivikah.com/images/og-share.png",
+    "og:image:secure_url": "https://studiodaivikah.com/images/og-share.png",
+    "og:image:type": "image/png",
+    "og:image:width": "1200",
+    "og:image:height": "630",
   },
 };
 
@@ -120,6 +131,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta property="og:image" content="https://studiodaivikah.com/images/og-share.png" />
+        <meta property="og:image:secure_url" content="https://studiodaivikah.com/images/og-share.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
