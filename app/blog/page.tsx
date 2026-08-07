@@ -28,11 +28,15 @@ const Page = () => {
     const fetchProjects = async () => {
       try {
         const res = await fetch("/api/blog?includeBlog=true");
-        const data = await res.json();
-        console.log(data);
-        setAllProjects(data.projects || []);
+        if (res.ok) {
+          const data = await res.json();
+          setAllProjects(Array.isArray(data?.projects) ? data.projects : []);
+        } else {
+          setAllProjects([]);
+        }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
+        setAllProjects([]);
       } finally {
         setLoading(false);
       }

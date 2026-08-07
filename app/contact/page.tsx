@@ -66,15 +66,15 @@ const ContactForm = () => {
     <main className="flex-center flex-col pt-20 max-w-[2800px] w-full">
       <Toaster position="bottom-center"/>
       <Navbar />
-      <div className="w-screen h-[900px] lg:h-[1060px] 2xl:h-[1460px] relative overflow-hidden">
+      <div className="w-full min-h-[450px] sm:h-[550px] relative overflow-hidden flex items-center justify-center">
         <Image
           fill
           alt="Contact Background"
           src="/images/contact_img.jpg"
           className="z-0 object-cover"
         />
-        <div className="relative z-10 flex -top-64 sm:-top-64 md:-top-72 lg:-top-[360px] 2xl:-top-[520px] items-center justify-center h-full">
-          <p className="max-w-[1240px] px-10 text-center text-[16px] sm:text-[20px] md:text-[28px] font-medium text-gray-700 rounded-lg p-6">
+        <div className="relative z-10 flex items-center justify-center h-full max-w-[1240px] px-5 sm:px-10 py-12">
+          <p className="bg-white/80 backdrop-blur-sm text-center text-[16px] sm:text-[20px] md:text-[24px] font-medium text-gray-800 rounded-2xl p-6 sm:p-10 shadow-lg leading-relaxed">
             Have a project in mind? A question, idea, or simply want to start a
             conversation? We&lsquo;d love to hear from you. Whether you&lsquo;re
             looking to collaborate, request a consultation, or just learn more
@@ -85,33 +85,33 @@ const ContactForm = () => {
         </div>
       </div>
 
-      <section className="flex flex-col items-center max-w-[1240px] px-10 w-full py-10">
-        <div className="flex flex-col md:flex-row items-start justify-between mt-5 w-full max-w-[1140px] gap-16">
-          <div className="flex-start mt-20 flex-col gap-8 md:mt-0 md:gap-16">
-            <div className="flex-start max-w-[336px] flex-col gap-y-5">
-              <p className="text-[70px] text-wrap sm:text-[80px] leading-20 sm:text-nowrap md:text-wrap xl:text-[100px] 2xl:text-[130px] font-extrabold text-black md:leading-22 xl:leading-25 2xl:leading-32">
+      <section className="flex flex-col items-center max-w-[1240px] px-5 sm:px-10 w-full py-10">
+        <div className="flex flex-col md:flex-row items-start justify-between mt-5 w-full max-w-[1140px] gap-10 md:gap-16">
+          <div className="flex-start flex-col gap-8 md:gap-12 w-full md:w-auto">
+            <div className="flex-start max-w-[400px] flex-col gap-y-3">
+              <p className="text-[48px] sm:text-[70px] xl:text-[90px] font-extrabold text-black leading-tight">
                 LET&apos;S TALK
               </p>
-              <p className="text-[26px] mt-2 text-gray-700">
+              <p className="text-[18px] sm:text-[22px] text-gray-700">
                 &quot;From repairs to renovations, we&lsquo;re here for you. Contact
                 Studio daivikah!&quot;
               </p>
             </div>
             <div className="flex-start max-w-[286px] flex-col">
-              <p className="h3-bold lg:text-[20px] text-black font-medium">
+              <p className="lg:text-[20px] text-black font-medium">
                 Call Us
               </p>
               <Link
-                href={`https://wa.me/919344217163?text=Hello Studio daivikah`}
-                className="flex-center mt-2 "
+                href={`https://wa.me/917550237036?text=Hello%20Studio%20Daivikah`}
+                className="flex-center mt-2"
               >
-                <p className="body-regular lg:paragraph-regular text-gray-700">
+                <p className="text-gray-700 hover:text-black transition-colors">
                   +91 75502 37036
                 </p>
               </Link>
             </div>
             <div className="flex-start max-w-[286px] flex-col gap-4">
-              <p className="h3-bold lg:base-bold text-black">Links</p>
+              <p className="text-black font-medium">Links</p>
               <div>
                 <SocialLinks />
               </div>
@@ -119,14 +119,14 @@ const ContactForm = () => {
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex-start w-full max-w-[500px]"
+            className="flex-start w-full max-w-[550px]"
           >
-            <div className="flex items-start justify-start mx-auto max-w-[1140px] w-full flex-col space-y-10 md:space-y-20 2xl:mx-auto ">
-              <div className="xs:flex-between xs:space-x-3 xs:space-y-0 w-full max-w-[736px] gap-4 space-y-10">
+            <div className="flex items-start justify-start mx-auto w-full flex-col space-y-6 sm:space-y-10">
+              <div className="flex flex-col sm:flex-row gap-6 w-full">
                 <div className="group relative z-0 w-full">
                   <input
                     type="text"
-                    className="peer block w-full max-w-[456px] appearance-none border-0 border-b border-b-black bg-transparent px-0 
+                    className="peer block w-full appearance-none border-0 border-b border-b-black bg-transparent px-0 
                   py-4 text-start focus:outline-none focus:ring-0"
                     placeholder=""
                     required
@@ -135,24 +135,23 @@ const ContactForm = () => {
                   <label
                     className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 text-gray-400
                 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 
-                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium
-                rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
                   >
                     Your Name
                   </label>
-                  <p className="h-2 py-1">
+                  <div className="min-h-5 py-1">
                     {errors.name && (
-                      <p className="small-regular text-red-500">
+                      <p className="text-xs text-red-500">
                         {errors.name.message}
                       </p>
                     )}
-                  </p>
+                  </div>
                 </div>
 
                 <div className="group relative z-0 w-full">
                   <input
                     type="text"
-                    className="peer block w-full max-w-[456px] appearance-none border-0 border-b border-b-black bg-transparent 
+                    className="peer block w-full appearance-none border-0 border-b border-b-black bg-transparent 
                   px-0 py-4 text-start focus:outline-none focus:ring-0"
                     placeholder=""
                     required
@@ -161,27 +160,26 @@ const ContactForm = () => {
                   <label
                     className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 text-gray-400
                 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 
-                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium
-                rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
                   >
                     Your Email
                   </label>
-                  <p className="h-2 py-1">
+                  <div className="min-h-5 py-1">
                     {errors.email && (
-                      <p className="small-regular text-red-500">
+                      <p className="text-xs text-red-500">
                         {errors.email.message}
                       </p>
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex-between w-full max-w-[456px] space-y-10">
+              <div className="w-full">
                 <div className="group relative z-0 w-full">
-                  <input
-                    type="text"
-                    className="peer block w-full max-w-[644px] appearance-none border-0 border-b border-b-black bg-transparent 
-                  px-0 py-4 pb-24 text-start focus:outline-none focus:ring-0"
+                  <textarea
+                    rows={4}
+                    className="peer block w-full appearance-none border-0 border-b border-b-black bg-transparent 
+                  px-0 py-4 text-start focus:outline-none focus:ring-0 resize-none"
                     placeholder=""
                     required
                     {...register("message")}
@@ -189,27 +187,26 @@ const ContactForm = () => {
                   <label
                     className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 text-gray-400
                 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 
-                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium
-                rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
                   >
                     Your Message
                   </label>
-                  <p className="h-2 py-1">
+                  <div className="min-h-5 py-1">
                     {errors.message && (
-                      <p className="small-regular text-red-500">
+                      <p className="text-xs text-red-500">
                         {errors.message.message}
                       </p>
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
 
               {loading ? (
-                <button className="paragraph-regular flex-center mt-6 gap-2 bg-black px-4 py-2.5 text-center text-white ring-1 ring-black">
+                <button className="flex-center mt-6 gap-2 bg-black px-6 py-3 text-center text-white rounded-lg cursor-wait">
                   <div role="status">
                     <svg
                       aria-hidden="true"
-                      className="size-6 animate-spin fill-white text-gray-200 dark:text-gray-600"
+                      className="size-5 animate-spin fill-white text-gray-200"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -223,11 +220,11 @@ const ContactForm = () => {
                         fill="currentFill"
                       />
                     </svg>
-                  </div>{" "}
-                  <p className="paragraph-regular">Submit</p>
+                  </div>
+                  <span>Submitting...</span>
                 </button>
               ) : (
-                <button className="paragraph-regular mt-6 bg-black text-white px-8 py-2.5 text-center">
+                <button className="mt-6 bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium cursor-pointer">
                   Submit
                 </button>
               )}
@@ -235,26 +232,24 @@ const ContactForm = () => {
           </form>
         </div>
       </section>
-      <div className="flex-center w-full px-4 h-[400px] bg-black">
-        <div className="bg-white w-full h-[360px] py-4 sm:py-0 sm:h-[300px] rounded-[20px] flex justify-between max-w-[1140px] px-6 sm:px-10 md:px-20">
-          <div className="flex items-center justify-center flex-col sm:flex-row gap-10 w-full h-full overflow-hidden">
-            <div className="relative w-[460px] h-[400px] sm:h-[300px] sm:-mb-26">
-              <Image
-                fill
-                src="/images/footerbg.jpg"
-                alt="Description"
-                className="rounded-[20px]"
-              />
-            </div>
-            <div className="flex flex-col items-start jsutify-start gap-4">
-              <p className="text-black max-w-[700px] w-full text-start text-wrap text-[28px] md:text-[46px] lg:text-[60px] leading-8 sm:leading-12 lg:leading-20 font-bold">
-                CONTACT US FOR SOLUTIONS
-              </p>
-              <p className="text-[16px]">
-                All queries are solved within{" "}
-                <span className="underline">24 hours</span>.
-              </p>
-            </div>
+      <div className="flex-center w-full px-4 py-8 sm:py-12 bg-black">
+        <div className="bg-white w-full max-w-[1140px] rounded-[20px] p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="relative w-full md:w-1/2 h-[220px] sm:h-[280px] rounded-[16px] overflow-hidden flex-shrink-0">
+            <Image
+              fill
+              src="/images/footerbg.jpg"
+              alt="Solutions banner"
+              className="object-cover rounded-[16px]"
+            />
+          </div>
+          <div className="flex flex-col items-start justify-center gap-4 w-full md:w-1/2">
+            <p className="text-black text-[28px] sm:text-[36px] lg:text-[48px] leading-tight font-bold">
+              CONTACT US FOR SOLUTIONS
+            </p>
+            <p className="text-[16px] text-gray-700">
+              All queries are solved within{" "}
+              <span className="underline font-semibold">24 hours</span>.
+            </p>
           </div>
         </div>
       </div>

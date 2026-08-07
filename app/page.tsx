@@ -6,10 +6,10 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <section className="flex pt-20 flex-col">
+    <section className="w-full flex pt-20 flex-col items-center">
       <Navbar />
-      <div className="relative w-screen h-[1000px] sm:h-[800px] flex-center">
-        <Image fill src="/images/herobg.jpg" alt="Hero Background" />
+      <div className="relative w-full h-[1000px] sm:h-[800px] flex-center overflow-hidden">
+        <Image fill src="/images/herobg.jpg" alt="Hero Background" className="object-cover" priority />
         <Hero />
       </div>
       <MainFooter />

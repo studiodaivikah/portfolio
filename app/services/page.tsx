@@ -150,35 +150,35 @@ const ServicesPage: React.FC = () => {
   return (
     <section className="w-full pt-20 flex-center flex-col">
       <Navbar />
-      <div className="w-full flex-center border-b border-b-black">
+      <div className="w-full flex-center border-b border-b-black overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/ser_main.jpg"
           alt="Services Hero"
-          className="w-screen h-[300px] sm:h-[500px]"
+          className="w-full h-[250px] sm:h-[500px] object-cover"
         />
       </div>
 
-      <div className="max-w-[1200px] w-full px-10 py-14 flex items-start justify-center flex-col">
+      <div className="max-w-[1200px] w-full px-5 sm:px-10 py-10 sm:py-14 flex items-start justify-center flex-col">
         {/* Header Section */}
         <div className="flex flex-col items-start w-full justify-center gap-y-5">
           <div className="flex-between gap-2 w-full">
-            <p className="text-[14px] sm:text-[16px] font-normal text-black">
+            <p className="text-[12px] sm:text-[16px] font-normal text-black">
               Design. Build. Inspire
             </p>
-            <p className="text-[14px] sm:text-[16px] font-normal text-black">
+            <p className="text-[12px] sm:text-[16px] font-normal text-black">
               Shaping the Future Today
             </p>
           </div>
 
-          <div className="flex-center">
-            <p className="text-center text-black font-extrabold text-[40px] sm:text-[100px] md:text-[120px] lg:text-[140px]">
+          <div className="flex-center w-full">
+            <p className="text-center text-black font-extrabold text-[40px] sm:text-[80px] md:text-[100px] lg:text-[130px]">
               SERVICES
             </p>
           </div>
 
-          <div className="flex-center max-w-[700px] w-full">
-            <p className="text-[24px] text-black font-normal leading-7">
+          <div className="flex-center max-w-[700px] w-full mx-auto">
+            <p className="text-[18px] sm:text-[24px] text-black font-normal leading-7 text-center sm:text-left">
               Delivering architectural services with innovation, precision, and
               creativity to design spaces that inspire, function seamlessly, and
               stand the test of time.
@@ -187,21 +187,21 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* First Services Section */}
-        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-10 sm:py-16 gap-8 mx-auto">
           <div className="flex flex-col items-start max-w-[500px] w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/ser_pic_1.jpg"
               alt="Studio Daivikah Services"
-              className="h-[260px] w-full object-cover rounded-lg"
+              className="h-[220px] sm:h-[260px] w-full object-cover rounded-lg"
             />
-            <p className="text-[24px] leading-8 mt-6 font-medium text-black">
+            <p className="text-[20px] sm:text-[24px] leading-8 mt-6 font-medium text-black">
               Studio Daivikah: Our practice is rooted in thoughtful design,
               meticulous planning, and an unwavering focus on our clients&apos;
               vision
             </p>
             <div className="border border-gray-400/50 w-full h-px mt-3" />
-            <p className="text-[18px] leading-6 mt-6 font-normal text-gray-700">
+            <p className="text-[16px] sm:text-[18px] leading-6 mt-6 font-normal text-gray-700">
               Welcome to Studio Daivikah —where innovation meets functionality.
               Our expert services include design, planning, and project
               management, crafting exceptional spaces that inspire, endure, and
@@ -217,13 +217,13 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* Second Services Section */}
-        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-10 sm:py-16 gap-8 mx-auto">
           <div className="flex flex-col items-start max-w-[500px] w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/ser_pic_2.jpg"
               alt="Additional Services"
-              className="h-[400px] w-full object-cover rounded-lg"
+              className="h-[250px] sm:h-[400px] w-full object-cover rounded-lg"
             />
           </div>
 
@@ -235,9 +235,9 @@ const ServicesPage: React.FC = () => {
         </div>
 
         {/* Third Services Section */}
-        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-16 gap-8">
+        <div className="flex items-start sm:items-center justify-between sm:flex-row flex-col max-w-[1000px] w-full py-10 sm:py-16 gap-8 mx-auto">
           <div className="flex flex-col items-start max-w-[400px] w-full gap-y-4">
-            <p className="text-black font-medium text-[26px] mb-4">
+            <p className="text-black font-medium text-[22px] sm:text-[26px] mb-4">
               Innovative Spaces. Timeless Designs.
             </p>
             {designServices.map((service) => (
@@ -250,7 +250,7 @@ const ServicesPage: React.FC = () => {
             <img
               src="/images/ser_pic_3.jpg"
               alt="Design Excellence"
-              className="h-[400px] w-full object-cover rounded-lg"
+              className="h-[250px] sm:h-[400px] w-full object-cover rounded-lg"
             />
           </div>
         </div>

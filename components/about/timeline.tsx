@@ -72,11 +72,7 @@ export default function Timeline() {
                     </div>
                     <div className="mb-3">
                       <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                        {new Date(item.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {item.date}
                       </span>
                     </div>
                     <h3 className="text-xl font-bold text-gray-800 mb-2">

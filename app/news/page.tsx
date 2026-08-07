@@ -21,10 +21,15 @@ const NewsPage = () => {
     const fetchNews = async () => {
       try {
         const response = await fetch("/api/news");
-        const data = await response.json();
-        setNews(data.news);
+        if (response.ok) {
+          const data = await response.json();
+          setNews(Array.isArray(data?.news) ? data.news : []);
+        } else {
+          setNews([]);
+        }
       } catch (error) {
         console.error("Failed to fetch news:", error);
+        setNews([]);
       } finally {
         setLoading(false);
       }
@@ -99,7 +104,7 @@ const NewsPage = () => {
         <div className="flex justify-center items-center my-20">
           <div className="h-10 w-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
         </div>
-      ) : news.length === 0 ? (
+      ) : !news || !Array.isArray(news) || news.length === 0 ? (
           <div className="flex items-center justify-center h-64">
             <p className="text-gray-500 text-lg">No items to display</p>
           </div>

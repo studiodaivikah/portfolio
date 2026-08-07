@@ -27,8 +27,8 @@ const Navbar = () => {
 
   return (
     <>
-      <section className="w-full h-[80px] top-0 fixed z-50 bg-gray-950 flex-center mx-auto">
-        <div className="flex items-center justify-start mx-5 sm:mx-8 gap-6 lg:gap-0 lg:justify-between h-full max-w-[1140px] w-full">
+      <header className="fixed top-0 left-0 right-0 w-full h-[80px] z-50 bg-gray-950 flex-center">
+        <div className="flex items-center justify-between px-5 sm:px-8 h-full max-w-[1140px] w-full mx-auto">
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
@@ -117,7 +117,7 @@ const Navbar = () => {
             </a>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (

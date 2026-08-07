@@ -1,7 +1,6 @@
 "use client";
 
 import Admin from "@/components/admin/admin";
-import Footer from "@/components/footer/footer";
 import { useState } from "react";
 
 export default function AdminLoginPage() {

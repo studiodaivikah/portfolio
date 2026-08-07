@@ -40,11 +40,16 @@ const AdminShowcase: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/showcase");
-      if (!response.ok) throw new Error("Failed to fetch images");
+      if (!response.ok) {
+        console.warn("Error fetching images:", response.statusText);
+        setImages([]);
+        return;
+      }
       const data = await response.json();
-      setImages(data.images || []);
+      setImages(Array.isArray(data?.images) ? data.images : []);
     } catch (error) {
       console.error("Error fetching images:", error);
+      setImages([]);
     } finally {
       setIsLoading(false);
     }

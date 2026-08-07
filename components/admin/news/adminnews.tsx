@@ -47,11 +47,16 @@ const AdminNews: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/news");
-      if (!response.ok) throw new Error("Failed to fetch news");
+      if (!response.ok) {
+        console.warn("Error fetching news:", response.statusText);
+        setNews([]);
+        return;
+      }
       const data = await response.json();
-      setNews(data.news || []);
+      setNews(Array.isArray(data?.news) ? data.news : []);
     } catch (error) {
       console.error("Error fetching news:", error);
+      setNews([]);
     } finally {
       setIsLoading(false);
     }

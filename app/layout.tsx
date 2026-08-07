@@ -55,8 +55,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={jost.className}>
-        <main className="flex-center flex-col max-w-[2800px] w-full">
+      <body className={`${jost.className} min-h-screen w-full flex flex-col items-center overflow-x-hidden bg-white`}>
+        <main className="w-full flex flex-col items-center">
           {children}
         </main>
       </body>

@@ -41,11 +41,15 @@ const Page = () => {
     const fetchProjects = async () => {
       try {
         const res = await fetch("/api/portfolio?includeBlog=true");
-        const data = await res.json();
-        console.log(data);
-        setAllProjects(data.projects || []);
+        if (res.ok) {
+          const data = await res.json();
+          setAllProjects(Array.isArray(data?.projects) ? data.projects : []);
+        } else {
+          setAllProjects([]);
+        }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
+        setAllProjects([]);
       } finally {
         setLoading(false);
       }
@@ -56,9 +60,10 @@ const Page = () => {
 
   // Filter projects client-side
   const getFilteredProjects = () => {
+    if (!Array.isArray(allProjects)) return [];
     if (itemName === "ALL") return allProjects;
     return allProjects.filter(
-      (project) => project.type.toLowerCase() === itemName.toLowerCase()
+      (project) => project.type?.toLowerCase() === itemName.toLowerCase()
     );
   };
 

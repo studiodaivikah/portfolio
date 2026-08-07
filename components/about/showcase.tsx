@@ -14,11 +14,16 @@ const Showcase = () => {
   const fetchImages = async () => {
     try {
       const response = await fetch("/api/showcase");
-      if (!response.ok) throw new Error("Failed to fetch images");
+      if (!response.ok) {
+        console.warn("Showcase API response error:", response.statusText);
+        setImages([]);
+        return;
+      }
       const data = await response.json();
       setImages(data.images || []);
     } catch (error) {
       console.error("Error fetching images:", error);
+      setImages([]);
     }
   };
 

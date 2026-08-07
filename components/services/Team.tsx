@@ -17,11 +17,16 @@ const Team = () => {
   const fetchTeamMembers = async () => {
     try {
       const response = await fetch("/api/team");
-      if (!response.ok) throw new Error("Failed to fetch team members");
+      if (!response.ok) {
+        console.warn("Team API response error:", response.statusText);
+        setTeamMembers([]);
+        return;
+      }
       const data = await response.json();
       setTeamMembers(data.items || []);
     } catch (error) {
       console.error("Error fetching team members:", error);
+      setTeamMembers([]);
     }
   };
 
