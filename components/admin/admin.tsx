@@ -15,7 +15,7 @@ const Admin = () => {
           <p className="text-[14px] sm:text-[20px] font-normal text-white">
             Admin Panel
           </p>
-          <div className="flex-center gap-5">
+          <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar py-1">
             <button
               onClick={() => setCurrentpage("portfolio")}
               className="text-[10px] sm:text-[14px] font-normal px-4 py-2 cursor-pointer border border-slate-300 rounded-full text-white"

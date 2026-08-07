@@ -44,11 +44,16 @@ const AdminTeam: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/team");
-      if (!response.ok) throw new Error("Failed to fetch team members");
+      if (!response.ok) {
+        console.warn("Error fetching team members:", response.statusText);
+        setTeamMembers([]);
+        return;
+      }
       const data = await response.json();
-      setTeamMembers(data.items || []);
+      setTeamMembers(Array.isArray(data?.items) ? data.items : []);
     } catch (error) {
       console.error("Error fetching team members:", error);
+      setTeamMembers([]);
     } finally {
       setIsLoading(false);
     }

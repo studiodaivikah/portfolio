@@ -27,8 +27,8 @@ const Navbar = () => {
 
   return (
     <>
-      <section className="w-full h-[80px] top-0 fixed z-50 bg-gray-950 flex-center mx-auto">
-        <div className="flex items-center justify-start mx-5 sm:mx-8 gap-6 lg:gap-0 lg:justify-between h-full max-w-[1140px] w-full">
+      <header className="fixed top-0 left-0 right-0 w-full h-[80px] z-50 bg-gray-950 flex-center">
+        <div className="flex items-center justify-between px-5 sm:px-8 h-full max-w-[1140px] w-full mx-auto">
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
@@ -60,18 +60,18 @@ const Navbar = () => {
           </nav>
 
           {/* Desktop Social Icons */}
-          <div className="hidden lg:flex items-center justify-center gap-1.5">
+          <div className="hidden lg:flex items-center justify-center gap-3">
             <a
               target="_blank"
               href={"https://www.linkedin.com/company/studio-daivikah/"}
               rel="noopener noreferrer"
-              className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+              className="border border-gray-400/80 bg-white/10 p-2 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
             >
               <Image
-                height={24}
-                width={24}
+                height={16}
+                width={16}
                 alt="linkedin"
-                src={"/icons/linkedin.svg"}
+                src={"/icons/linkedin_filled.svg"}
               />
             </a>
             <a
@@ -80,44 +80,44 @@ const Navbar = () => {
                 "https://www.instagram.com/studio.daivikah?igsh=NHFnbjJ2cmpxYXRh&utm_source=qr"
               }
               rel="noopener noreferrer"
-              className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+              className="border border-gray-400/80 bg-white/10 p-2 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
             >
               <Image
-                height={24}
-                width={24}
+                height={16}
+                width={16}
                 alt="instagram"
-                src={"/icons/instagram.svg"}
+                src={"/icons/instagram_filled.svg"}
               />
             </a>
             <a
               href="https://wa.me/917550237036?text=Hello%20Studio%20Daivikah"
               target="_blank"
               rel="noopener noreferrer"
-              className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+              className="border border-gray-400/80 bg-white/10 p-2 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
             >
               <Image
-                height={24}
-                width={24}
+                height={16}
+                width={16}
                 alt="whatsapp"
-                src="/icons/whatsapp.svg"
+                src="/icons/whatsapp_filled.svg"
               />
             </a>
             <a
               href="https://www.facebook.com/share/15spjwC4w9/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
-              className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+              className="border border-gray-400/80 bg-white/10 p-2 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
             >
               <Image
-                height={24}
-                width={24}
+                height={16}
+                width={16}
                 alt="facebook"
-                src="/icons/facebook.svg"
+                src="/icons/facebook_filled.svg"
               />
             </a>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
@@ -153,18 +153,18 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Social Icons */}
-        <div className="flex items-center justify-center gap-6 py-6 border-t border-gray-800">
+        <div className="flex items-center justify-center gap-4 py-6 border-t border-gray-800">
           <a
             target="_blank"
             href={"https://www.linkedin.com/company/studio-daivikah/"}
             rel="noopener noreferrer"
-            className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+            className="border border-gray-400/80 bg-white/10 p-2.5 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
           >
             <Image
-              height={28}
-              width={28}
+              height={18}
+              width={18}
               alt="linkedin"
-              src={"/icons/linkedin.svg"}
+              src={"/icons/linkedin_filled.svg"}
             />
           </a>
           <a
@@ -173,26 +173,39 @@ const Navbar = () => {
               "https://www.instagram.com/studio.daivikah?igsh=NHFnbjJ2cmpxYXRh&utm_source=qr"
             }
             rel="noopener noreferrer"
-            className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+            className="border border-gray-400/80 bg-white/10 p-2.5 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
           >
             <Image
-              height={28}
-              width={28}
+              height={18}
+              width={18}
               alt="instagram"
-              src={"/icons/instagram.svg"}
+              src={"/icons/instagram_filled.svg"}
             />
           </a>
           <a
             href="https://wa.me/917550237036?text=Hello%20Studio%20Daivikah"
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer hover:opacity-70 transition-opacity duration-200"
+            className="border border-gray-400/80 bg-white/10 p-2.5 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
           >
             <Image
-              height={28}
-              width={28}
+              height={18}
+              width={18}
               alt="whatsapp"
-              src="/icons/whatsapp.svg"
+              src="/icons/whatsapp_filled.svg"
+            />
+          </a>
+          <a
+            href="https://www.facebook.com/share/15spjwC4w9/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border border-gray-400/80 bg-white/10 p-2.5 rounded-full hover:bg-white/25 hover:border-white transition-all duration-300"
+          >
+            <Image
+              height={18}
+              width={18}
+              alt="facebook"
+              src="/icons/facebook_filled.svg"
             />
           </a>
         </div>

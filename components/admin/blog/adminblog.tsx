@@ -76,11 +76,16 @@ const AdminBlog: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/blog?includeBlog=true");
-      if (!response.ok) throw new Error("Failed to fetch projects");
+      if (!response.ok) {
+        console.warn("Error fetching projects:", response.statusText);
+        setProjects([]);
+        return;
+      }
       const data = await response.json();
-      setProjects(data.projects || []);
+      setProjects(Array.isArray(data?.projects) ? data.projects : []);
     } catch (error) {
       console.error("Error fetching projects:", error);
+      setProjects([]);
     } finally {
       setIsLoading(false);
     }
@@ -262,6 +267,7 @@ const AdminBlog: React.FC = () => {
       setBlogFormData({ paragraphs: [""], images: [] });
       alert("Blog content saved successfully!");
     } catch (error) {
+      console.error("Error saving blog content:", error);
       alert("Error saving blog content.");
     } finally {
       setIsLoading(false);
