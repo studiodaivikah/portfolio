@@ -3,6 +3,22 @@ import MainFooter from "@/components/footer/mainfooter";
 import Hero from "@/components/hero/hero";
 import Navbar from "@/components/nav/navbar";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Concept to Creation | Architecture & Interior Design",
+  description:
+    "Welcome to Studio Daivikah — where imagination takes shape in steel and stone. Expert architectural design, 3D visualization, interior architecture, and urban planning.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Concept to Creation | Architecture & Interior Design | Studio Daivikah",
+    description:
+      "Welcome to Studio Daivikah — where imagination takes shape in steel and stone. Expert architectural design, 3D visualization, interior architecture, and urban planning.",
+    url: "https://studiodaivikah.com",
+  },
+};
 
 export default function Home() {
   return (

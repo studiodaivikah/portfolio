@@ -5,6 +5,22 @@ import React from "react";
 import Image from "next/image";
 import Showcase from "@/components/about/showcase";
 import Navbar from "@/components/nav/navbar";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us | Architecture & Design Philosophy",
+  description:
+    "Learn about Studio Daivikah — an architectural practice driven by thoughtful craftsmanship, contextual relevance, and the belief that great design must serve and inspire.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Us | Architecture & Design Philosophy | Studio Daivikah",
+    description:
+      "Learn about Studio Daivikah — an architectural practice driven by thoughtful craftsmanship, contextual relevance, and the belief that great design must serve and inspire.",
+    url: "https://studiodaivikah.com/about",
+  },
+};
 
 const page = () => {
   return (
@@ -17,9 +33,9 @@ const page = () => {
           src={"/images/abt_main.jpg"}
           alt="pic1"
         />
-        <p className="text-center z-50 text-black font-extrabold text-[50px] sm:text-[90px] md:text-[120px] lg:text-[140px]">
+        <h1 className="text-center z-50 text-black font-extrabold text-[50px] sm:text-[90px] md:text-[120px] lg:text-[140px]">
           ABOUT
-        </p>
+        </h1>
       </div>
       <div className="flex flex-col my-16 md:my-32 md:flex-row md:justify-between max-w-[1240px] w-full px-5 sm:px-10 gap-8">
         <div className="flex-start flex-col gap-y-3">
