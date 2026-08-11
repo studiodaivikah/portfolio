@@ -5,7 +5,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Upload, Plus, Edit, Trash2, Save, X } from "lucide-react";
+import { Upload, Plus, Edit, Trash2, Save, X, Crop } from "lucide-react";
+import ImageCropperModal from "../ImageCropperModal";
 
 type NewsItem = {
   id: string;
@@ -34,6 +35,16 @@ const AdminNews: React.FC = () => {
     src: "",
     title: "",
     image: "",
+  });
+
+  const [cropperModal, setCropperModal] = useState<{
+    isOpen: boolean;
+    imageUrl: string;
+    targetNewsItem?: NewsItem | null;
+  }>({
+    isOpen: false,
+    imageUrl: "",
+    targetNewsItem: null,
   });
 
   useEffect(() => {
@@ -204,7 +215,8 @@ const AdminNews: React.FC = () => {
         uploadPreset: "mpd_portfolio",
         sources: ["local", "url", "camera"],
         multiple: false,
-        cropping: false,
+        cropping: true,
+        croppingAspectRatio: 1.777,
         folder: "mpd",
         maxFileSize: 5000000,
         clientAllowedFormats: ["jpg", "jpeg", "png"],
@@ -306,29 +318,48 @@ const AdminNews: React.FC = () => {
                 Image
               </label>
 
-              <button
-                type="button"
-                onClick={openCloudinaryWidget}
-                className="bg-gray-100 border-2 border-dashed rounded-lg p-8 text-center w-full cursor-pointer hover:bg-gray-50"
-              >
-                {formData.image ? (
-                  <div className="space-y-2">
-                    <img
-                      src={formData.image}
-                      alt="Preview"
-                      className="max-w-xs max-h-48 mx-auto rounded-lg"
-                    />
-                    <p className="text-sm text-gray-600">Image selected</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="text-gray-600">
-                      Click to upload via Cloudinary
-                    </p>
-                  </div>
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={openCloudinaryWidget}
+                  className="bg-gray-100 border-2 border-dashed rounded-lg p-6 text-center w-full cursor-pointer hover:bg-gray-50"
+                >
+                  {formData.image ? (
+                    <div className="space-y-2">
+                      <img
+                        src={formData.image}
+                        alt="Preview"
+                        className="max-w-xs max-h-48 mx-auto rounded-lg object-contain"
+                      />
+                      <p className="text-sm text-gray-600">Click to re-upload via Cloudinary</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-gray-600">
+                        Click to upload via Cloudinary
+                      </p>
+                    </div>
+                  )}
+                </button>
+
+                {formData.image && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCropperModal({
+                        isOpen: true,
+                        imageUrl: formData.image,
+                        targetNewsItem: null,
+                      })
+                    }
+                    className="flex items-center justify-center gap-2 py-2 px-4 bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 rounded-lg text-sm font-medium transition cursor-pointer"
+                  >
+                    <Crop size={16} />
+                    Crop & Fit Thumbnail Image
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
 
             <div className="flex gap-2">
@@ -383,16 +414,31 @@ const AdminNews: React.FC = () => {
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                     {n.src}
                   </span>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1.5 items-center">
+                    <button
+                      onClick={() =>
+                        setCropperModal({
+                          isOpen: true,
+                          imageUrl: n.image,
+                          targetNewsItem: n,
+                        })
+                      }
+                      title="Crop Thumbnail"
+                      className="text-indigo-600 cursor-pointer hover:text-indigo-800 p-1 hover:bg-indigo-50 rounded"
+                    >
+                      <Crop size={16} />
+                    </button>
                     <button
                       onClick={() => startEdit(n)}
-                      className="text-blue-600 cursor-pointer hover:text-blue-800"
+                      title="Edit Item"
+                      className="text-blue-600 cursor-pointer hover:text-blue-800 p-1 hover:bg-blue-50 rounded"
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => showDeleteConfirmation(n)}
-                      className="text-red-600 cursor-pointer hover:text-red-800"
+                      title="Delete Item"
+                      className="text-red-600 cursor-pointer hover:text-red-800 p-1 hover:bg-red-50 rounded"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -407,6 +453,30 @@ const AdminNews: React.FC = () => {
           ))
         )}
       </div>
+
+      {/* Image Cropper Modal */}
+      <ImageCropperModal
+        isOpen={cropperModal.isOpen}
+        imageUrl={cropperModal.imageUrl}
+        defaultAspectRatio={16 / 9}
+        title="Crop News Thumbnail Image"
+        onClose={() =>
+          setCropperModal({ isOpen: false, imageUrl: "", targetNewsItem: null })
+        }
+        onCropSave={async (croppedImageUrl) => {
+          if (cropperModal.targetNewsItem) {
+            // Update existing news item directly
+            await updateNews(cropperModal.targetNewsItem.id, {
+              src: cropperModal.targetNewsItem.src,
+              title: cropperModal.targetNewsItem.title,
+              image: croppedImageUrl,
+            });
+          } else {
+            // Update current form data image
+            setFormData((prev) => ({ ...prev, image: croppedImageUrl }));
+          }
+        }}
+      />
     </div>
   );
 };

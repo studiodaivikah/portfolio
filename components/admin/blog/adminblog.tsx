@@ -12,7 +12,9 @@ import {
   FileText,
   Eye,
   Image as ImageIcon,
+  Crop,
 } from "lucide-react";
+import ImageCropperModal from "../ImageCropperModal";
 
 type Project = {
   id: string;
@@ -61,6 +63,16 @@ const AdminBlog: React.FC = () => {
   const [blogFormData, setBlogFormData] = useState<BlogFormData>({
     paragraphs: [""],
     images: [],
+  });
+
+  const [cropperModal, setCropperModal] = useState<{
+    isOpen: boolean;
+    imageUrl: string;
+    targetProject?: Project | null;
+  }>({
+    isOpen: false,
+    imageUrl: "",
+    targetProject: null,
   });
 
   // Load Cloudinary widget script
@@ -359,7 +371,8 @@ const AdminBlog: React.FC = () => {
         uploadPreset: "mpd_db",
         sources: ["local", "url", "camera"],
         multiple: isForBlog,
-        cropping: false,
+        cropping: !isForBlog,
+        croppingAspectRatio: 1.6,
         folder: "mpd",
         maxFileSize: 5000000,
         clientAllowedFormats: ["jpg", "jpeg", "png"],
@@ -457,29 +470,48 @@ const AdminBlog: React.FC = () => {
                 Image
               </label>
 
-              <button
-                type="button"
-                onClick={() => openCloudinaryWidget(false)}
-                className="bg-gray-100 border-2 border-dashed rounded-lg p-8 text-center w-full cursor-pointer hover:bg-gray-50"
-              >
-                {formData.image ? (
-                  <div className="space-y-2">
-                    <img
-                      src={formData.image}
-                      alt="Preview"
-                      className="max-w-xs max-h-48 mx-auto rounded-lg"
-                    />
-                    <p className="text-sm text-gray-600">Image selected</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="text-gray-600">
-                      Click to upload via Cloudinary
-                    </p>
-                  </div>
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={() => openCloudinaryWidget(false)}
+                  className="bg-gray-100 border-2 border-dashed rounded-lg p-6 text-center w-full cursor-pointer hover:bg-gray-50"
+                >
+                  {formData.image ? (
+                    <div className="space-y-2">
+                      <img
+                        src={formData.image}
+                        alt="Preview"
+                        className="max-w-xs max-h-48 mx-auto rounded-lg object-contain"
+                      />
+                      <p className="text-sm text-gray-600">Click to re-upload via Cloudinary</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-gray-600">
+                        Click to upload via Cloudinary
+                      </p>
+                    </div>
+                  )}
+                </button>
+
+                {formData.image && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCropperModal({
+                        isOpen: true,
+                        imageUrl: formData.image,
+                        targetProject: null,
+                      })
+                    }
+                    className="flex items-center justify-center gap-2 py-2 px-4 bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 rounded-lg text-sm font-medium transition cursor-pointer"
+                  >
+                    <Crop size={16} />
+                    Crop & Fit Thumbnail Image
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
 
             <div className="flex gap-2">
@@ -643,10 +675,23 @@ const AdminBlog: React.FC = () => {
                   {/* <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                     {project.type}
                   </span> */}
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 items-center">
+                    <button
+                      onClick={() =>
+                        setCropperModal({
+                          isOpen: true,
+                          imageUrl: project.image,
+                          targetProject: project,
+                        })
+                      }
+                      className="text-indigo-600 cursor-pointer hover:text-indigo-800 p-1 hover:bg-indigo-50 rounded"
+                      title="Crop Thumbnail"
+                    >
+                      <Crop size={16} />
+                    </button>
                     <button
                       onClick={() => startEdit(project)}
-                      className="text-blue-600 cursor-pointer hover:text-blue-800"
+                      className="text-blue-600 cursor-pointer hover:text-blue-800 p-1 hover:bg-blue-50 rounded"
                       title="Edit Project"
                     >
                       <Edit size={16} />
@@ -694,6 +739,29 @@ const AdminBlog: React.FC = () => {
           ))
         )}
       </div>
+
+      {/* Image Cropper Modal */}
+      <ImageCropperModal
+        isOpen={cropperModal.isOpen}
+        imageUrl={cropperModal.imageUrl}
+        defaultAspectRatio={16 / 10}
+        title="Crop Blog Project Thumbnail Image"
+        onClose={() =>
+          setCropperModal({ isOpen: false, imageUrl: "", targetProject: null })
+        }
+        onCropSave={async (croppedImageUrl) => {
+          if (cropperModal.targetProject) {
+            // Update existing project directly
+            await updateProject(cropperModal.targetProject.id, {
+              title: cropperModal.targetProject.title,
+              image: croppedImageUrl,
+            });
+          } else {
+            // Update current form data image
+            setFormData((prev) => ({ ...prev, image: croppedImageUrl }));
+          }
+        }}
+      />
     </div>
   );
 };

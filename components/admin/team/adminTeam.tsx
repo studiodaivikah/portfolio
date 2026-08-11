@@ -5,7 +5,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Upload, Plus, Edit, Trash2, Save, X } from "lucide-react";
+import { Upload, Plus, Edit, Trash2, Save, X, Crop } from "lucide-react";
+import ImageCropperModal from "../ImageCropperModal";
 
 type TeamMember = {
   id: string;
@@ -30,6 +31,16 @@ const AdminTeam: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [role, setRole] = useState<string>("");
+
+  const [cropperModal, setCropperModal] = useState<{
+    isOpen: boolean;
+    imageUrl: string;
+    targetMember?: TeamMember | null;
+  }>({
+    isOpen: false,
+    imageUrl: "",
+    targetMember: null,
+  });
 
   // Load Cloudinary widget script
   useEffect(() => {
@@ -222,7 +233,8 @@ const AdminTeam: React.FC = () => {
         uploadPreset: "mpd_portfolio",
         sources: ["local", "url", "camera"],
         multiple: false,
-        cropping: false,
+        cropping: true,
+        croppingAspectRatio: 0.75,
         folder: "mpd/team",
         maxFileSize: 10000000,
         clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
@@ -339,31 +351,50 @@ const AdminTeam: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Image *
               </label>
-              <button
-                type="button"
-                onClick={openCloudinaryWidget}
-                className="bg-gray-100 border-2 border-dashed rounded-lg p-8 text-center w-full cursor-pointer hover:bg-gray-50"
-              >
-                {selectedImage ? (
-                  <div className="space-y-2">
-                    <img
-                      src={selectedImage}
-                      alt="Preview"
-                      className="max-w-xs max-h-48 mx-auto rounded-lg"
-                    />
-                    <p className="text-sm text-gray-600">
-                      Image selected - Click to change
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="text-gray-600">
-                      Click to upload via Cloudinary
-                    </p>
-                  </div>
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={openCloudinaryWidget}
+                  className="bg-gray-100 border-2 border-dashed rounded-lg p-6 text-center w-full cursor-pointer hover:bg-gray-50"
+                >
+                  {selectedImage ? (
+                    <div className="space-y-2">
+                      <img
+                        src={selectedImage}
+                        alt="Preview"
+                        className="max-w-xs max-h-48 mx-auto rounded-lg object-contain"
+                      />
+                      <p className="text-sm text-gray-600">
+                        Image selected - Click to change
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-gray-600">
+                        Click to upload via Cloudinary
+                      </p>
+                    </div>
+                  )}
+                </button>
+
+                {selectedImage && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCropperModal({
+                        isOpen: true,
+                        imageUrl: selectedImage,
+                        targetMember: null,
+                      })
+                    }
+                    className="flex items-center justify-center gap-2 py-2 px-4 bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 rounded-lg text-sm font-medium transition cursor-pointer"
+                  >
+                    <Crop size={16} />
+                    Crop & Fit Team Member Image
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
 
             <div className="flex gap-2">
@@ -419,13 +450,28 @@ const AdminTeam: React.FC = () => {
                 {/* Hover overlay with actions */}
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                   <button
+                    onClick={() =>
+                      setCropperModal({
+                        isOpen: true,
+                        imageUrl: member.image,
+                        targetMember: member,
+                      })
+                    }
+                    title="Crop Thumbnail"
+                    className="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 cursor-pointer"
+                  >
+                    <Crop size={16} />
+                  </button>
+                  <button
                     onClick={() => startEdit(member)}
+                    title="Edit Member"
                     className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 cursor-pointer"
                   >
                     <Edit size={16} />
                   </button>
                   <button
                     onClick={() => showDeleteConfirmation(member)}
+                    title="Delete Member"
                     className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 cursor-pointer"
                   >
                     <Trash2 size={16} />
@@ -448,6 +494,31 @@ const AdminTeam: React.FC = () => {
           ))
         )}
       </div>
+
+      {/* Image Cropper Modal */}
+      <ImageCropperModal
+        isOpen={cropperModal.isOpen}
+        imageUrl={cropperModal.imageUrl}
+        defaultAspectRatio={3 / 4}
+        title="Crop Team Member Image"
+        onClose={() =>
+          setCropperModal({ isOpen: false, imageUrl: "", targetMember: null })
+        }
+        onCropSave={async (croppedImageUrl) => {
+          if (cropperModal.targetMember) {
+            // Update existing team member directly
+            await updateTeamMember(
+              cropperModal.targetMember.id,
+              croppedImageUrl,
+              cropperModal.targetMember.name,
+              cropperModal.targetMember.role
+            );
+          } else {
+            // Update current form image
+            setSelectedImage(croppedImageUrl);
+          }
+        }}
+      />
     </div>
   );
 };
