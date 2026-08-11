@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const jost = Jost({
@@ -152,6 +153,7 @@ export default function RootLayout({
         <main className="w-full flex flex-col items-center">
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );
