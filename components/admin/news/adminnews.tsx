@@ -177,7 +177,7 @@ const AdminNews: React.FC = () => {
 
       setFormData({ src: "", title: "", image: "" });
     } catch (error) {
-      alert("Error saving news.");
+      alert("Error saving featured item.");
     } finally {
       setIsLoading(false);
     }
@@ -237,13 +237,13 @@ const AdminNews: React.FC = () => {
   return (
     <div className="max-w-6xl w-full mx-auto p-6 overflow-y-scroll">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-xl sm:text-3xl font-bold text-gray-900">News Manager</h1>
+        <h1 className="text-xl sm:text-3xl font-bold text-gray-900">Featured Manager</h1>
         <button
           onClick={() => setShowAddForm(true)}
           className="bg-blue-600 cursor-pointer text-[12px] sm:text-[16px] text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
         >
           <Plus size={20} />
-          Add News
+          Add Featured
         </button>
       </div>
 
@@ -252,7 +252,7 @@ const AdminNews: React.FC = () => {
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md mx-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Delete News
+              Delete Featured
             </h3>
             <p className="text-gray-600 mb-4">
               Are you sure you want to delete &quot;{deleteConfirm.newsItem.title}&quot;? 
@@ -279,13 +279,13 @@ const AdminNews: React.FC = () => {
       {(showAddForm || editingNews) && (
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">
-            {editingNews ? "Edit News" : "Add New News"}
+            {editingNews ? "Edit Featured" : "Add New Featured"}
           </h2>
 
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Blog Source URL
+                Featured Source URL
               </label>
               <input
                 type="text"
@@ -294,7 +294,7 @@ const AdminNews: React.FC = () => {
                   setFormData((prev) => ({ ...prev, src: e.target.value }))
                 }
                 className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="Enter news URL"
+                placeholder="Enter featured URL"
               />
             </div>
 
@@ -390,11 +390,11 @@ const AdminNews: React.FC = () => {
         {isLoading ? (
           <div className="col-span-full text-center py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading news...</p>
+            <p className="mt-4 text-gray-600">Loading featured items...</p>
           </div>
         ) : news.length === 0 ? (
           <div className="col-span-full text-center py-8">
-            <p className="text-gray-600">No news found. Add your first post!</p>
+            <p className="text-gray-600">No featured items found. Add your first item!</p>
           </div>
         ) : (
           news.map((n) => (
@@ -459,7 +459,7 @@ const AdminNews: React.FC = () => {
         isOpen={cropperModal.isOpen}
         imageUrl={cropperModal.imageUrl}
         defaultAspectRatio={16 / 9}
-        title="Crop News Thumbnail Image"
+        title="Crop Featured Thumbnail Image"
         onClose={() =>
           setCropperModal({ isOpen: false, imageUrl: "", targetNewsItem: null })
         }
