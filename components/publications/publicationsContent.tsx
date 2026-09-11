@@ -4,46 +4,47 @@ import Image from "next/image";
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/nav/navbar";
 
-type NewsItem = {
+type PublicationItem = {
   id: string;
-  src: string;
   title: string;
-  image: string;
+  description: string;
+  link: string;
+  image?: string | null;
   createdAt: string;
 };
 
-const FeaturedContent = () => {
-  const [news, setNews] = useState<NewsItem[]>([]);
+const PublicationsContent = () => {
+  const [publications, setPublications] = useState<PublicationItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchPublications = async () => {
       try {
-        const response = await fetch("/api/news");
+        const response = await fetch("/api/publications");
         if (response.ok) {
           const data = await response.json();
-          setNews(Array.isArray(data?.news) ? data.news : []);
+          setPublications(Array.isArray(data?.publications) ? data.publications : []);
         } else {
-          setNews([]);
+          setPublications([]);
         }
       } catch (error) {
-        console.error("Failed to fetch news:", error);
-        setNews([]);
+        console.error("Failed to fetch publications:", error);
+        setPublications([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNews();
+    fetchPublications();
   }, []);
 
-  const handleShare = async (newsUrl: string, e: React.MouseEvent) => {
+  const handleShare = async (url: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      await navigator.clipboard.writeText(newsUrl);
+      await navigator.clipboard.writeText(url);
       setShowToast(true);
 
       // Hide toast after 3 seconds
@@ -80,69 +81,66 @@ const FeaturedContent = () => {
       )}
 
       {/* Main Title */}
-      <h1 className="text-center font-extrabold text-[50px] sm:text-[90px] md:text-[120px] lg:text-[140px] text-black tracking-tight my-10">
-        FEATURED
+      <h1 className="text-center font-extrabold text-[45px] sm:text-[80px] md:text-[110px] lg:text-[130px] text-black tracking-tight my-10">
+        PUBLICATIONS
       </h1>
 
       {/* Subtitle */}
       <div className="max-w-[760px] text-center px-5 mb-16">
         <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-light">
-          Stay updated with the latest press features, media coverage, and
-          industry updates from Studio Daivikah. Discover our latest
-          architectural milestones and achievements.
+          Explore external publication features, articles, press mentions, and published works highlighting Studio Daivikah.
         </p>
       </div>
 
-      {/* News Grid */}
+      {/* Publications Grid */}
       <div className="w-full max-w-[1240px] px-5 sm:px-10 mb-24">
         {loading ? (
           <div className="flex justify-center items-center my-20">
             <div className="h-10 w-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
           </div>
-        ) : !news || !Array.isArray(news) || news.length === 0 ? (
+        ) : !publications || publications.length === 0 ? (
           <div className="flex items-center justify-center h-64">
-            <p className="text-gray-500 text-lg">No items to display</p>
+            <p className="text-gray-500 text-lg">No publications available to display</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.map((item) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {publications.map((pub) => (
               <a
-                key={item.id}
-                href={item.src}
+                key={pub.id}
+                href={pub.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full cursor-pointer"
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-200/80 flex flex-col h-full cursor-pointer"
               >
-                {/* Image Container */}
-                <div className="relative w-full h-[260px] overflow-hidden bg-gray-100">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                </div>
+                {pub.image && (
+                  <div className="relative w-full h-[240px] overflow-hidden bg-gray-100">
+                    <Image
+                      src={pub.image}
+                      alt={pub.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                  </div>
+                )}
 
-                {/* Content */}
-                <div className="p-6 flex flex-col flex-grow justify-between">
+                <div className="p-7 flex flex-col flex-grow justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-black transition-colors line-clamp-3 leading-snug">
-                      {item.title}
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-black transition-colors line-clamp-2 leading-snug mb-3">
+                      {pub.title}
                     </h3>
+                    <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed font-normal">
+                      {pub.description}
+                    </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-xs text-gray-400 font-medium">
-                      {new Date(item.createdAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                  <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-xs text-gray-400 font-medium flex items-center gap-1 group-hover:text-black transition-colors">
+                      Read Publication &rarr;
                     </span>
 
                     <button
-                      onClick={(e) => handleShare(item.src, e)}
+                      onClick={(e) => handleShare(pub.link, e)}
                       className="p-2 rounded-full hover:bg-gray-100 text-gray-600 hover:text-black transition-colors"
                       title="Share link"
                     >
@@ -166,4 +164,4 @@ const FeaturedContent = () => {
   );
 };
 
-export default FeaturedContent;
+export default PublicationsContent;
