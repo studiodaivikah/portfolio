@@ -30,6 +30,7 @@ const links = [
   { id: 4, href: "/services", label: "Our Services" },
   { id: 5, href: "/about", label: "About Us" },
   { id: 6, href: "/featured", label: "Featured" },
+  { id: 7, href: "/publications", label: "Publications" },
 ];
 
 const MainFooter = () => {

@@ -11,6 +11,7 @@ const navitems = [
   { name: "PORTFOLIO", href: "/portfolio" },
   { name: "BLOG", href: "/blog" },
   { name: "FEATURED", href: "/featured" },
+  { name: "PUBLICATIONS", href: "/publications" },
   { name: "CONTACT", href: "/contact" },
 ];
 
