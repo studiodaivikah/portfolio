@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
-import NewsContent from "@/components/news/newsContent";
+import FeaturedContent from "@/components/featured/featuredContent";
 
 export const metadata: Metadata = {
-  title: "Media & Press News",
+  title: "Featured | Studio Daivikah",
   description:
-    "Explore Studio Daivikah in the news. Read press coverage, media features, architectural announcements, and milestones.",
+    "Explore Studio Daivikah features. Read press coverage, media features, architectural announcements, and milestones.",
   alternates: {
-    canonical: "/news",
+    canonical: "/featured",
   },
   openGraph: {
-    title: "Media & Press News | Studio Daivikah",
+    title: "Featured | Studio Daivikah",
     description:
-      "Explore Studio Daivikah in the news. Read press coverage, media features, architectural announcements, and milestones.",
-    url: "https://studiodaivikah.com/news",
+      "Explore Studio Daivikah features. Read press coverage, media features, architectural announcements, and milestones.",
+    url: "https://studiodaivikah.com/featured",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Studio Daivikah Media & Press News",
-  url: "https://studiodaivikah.com/news",
+  name: "Studio Daivikah Featured Media & Press",
+  url: "https://studiodaivikah.com/featured",
   description: "Press coverage, media features, and news coverage of Studio Daivikah.",
   publisher: {
     "@type": "ArchitecturalStudio",
@@ -29,14 +29,14 @@ const jsonLd = {
   },
 };
 
-export default function NewsPage() {
+export default function FeaturedPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <NewsContent />
+      <FeaturedContent />
     </>
   );
 }

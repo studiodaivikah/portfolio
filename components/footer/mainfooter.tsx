@@ -29,7 +29,7 @@ const links = [
   { id: 3, href: "/contact", label: "Contact" },
   { id: 4, href: "/services", label: "Our Services" },
   { id: 5, href: "/about", label: "About Us" },
-  { id: 6, href: "/news", label: "Latest News" },
+  { id: 6, href: "/featured", label: "Featured" },
 ];
 
 const MainFooter = () => {

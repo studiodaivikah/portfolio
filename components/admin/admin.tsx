@@ -5,6 +5,7 @@ import AdminNews from "./news/adminnews";
 import AdminShowcase from "./showcase/adminShowcase";
 import AdminTeam from "./team/adminTeam";
 import AdminBlog from "./blog/adminblog";
+import AdminPublications from "./publications/adminPublications";
 
 const Admin = () => {
   const [currentpage, setCurrentpage] = useState("");
@@ -26,7 +27,13 @@ const Admin = () => {
               onClick={() => setCurrentpage("news")}
               className="text-[10px] sm:text-[14px] border cursor-pointer border-slate-300 rounded-full px-4 py-2 font-normal text-white"
             >
-              Edit News
+              Edit Featured
+            </button>
+            <button
+              onClick={() => setCurrentpage("publications")}
+              className="text-[10px] sm:text-[14px] border cursor-pointer border-slate-300 rounded-full px-4 py-2 font-normal text-white"
+            >
+              Edit Publications
             </button>
             <button
               onClick={() => setCurrentpage("showcase")}
@@ -54,6 +61,8 @@ const Admin = () => {
           <PortfolioManager />
         ) : currentpage === "news" ? (
           <AdminNews />
+        ) : currentpage === "publications" ? (
+          <AdminPublications />
         ) : currentpage === "showcase" ? (
           <AdminShowcase />
         ) : currentpage === "team" ? (
@@ -63,7 +72,7 @@ const Admin = () => {
         ) : (
           <main className="flex-center w-full max-w-[1140px] h-screen">
             <p className="text-[20px] text-gray-500 font-normal">
-              Click on portfolio or news or showcase or team
+              Click on portfolio, featured, publications, showcase, team, or blog
             </p>
           </main>
         )}
